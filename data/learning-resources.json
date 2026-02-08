@@ -1,0 +1,347 @@
+{
+  "lastUpdated": "2026-02-07",
+  "categories": [
+    {
+      "id": "courses",
+      "name": "Online Courses",
+      "resources": [
+        {
+          "title": "fast.ai - Practical Deep Learning for Coders",
+          "url": "https://course.fast.ai/",
+          "description": "Hands-on deep learning course that gets you building models from day one. Focuses on practical applications using PyTorch.",
+          "level": "beginner",
+          "cost": "free",
+          "provider": "fast.ai",
+          "tags": ["deep-learning", "pytorch", "practical"]
+        },
+        {
+          "title": "Andrew Ng's Machine Learning Specialization",
+          "url": "https://www.coursera.org/specializations/machine-learning-introduction",
+          "description": "The gold standard ML course by Andrew Ng. Covers supervised learning, unsupervised learning, and best practices.",
+          "level": "beginner",
+          "cost": "freemium",
+          "provider": "Coursera / Stanford",
+          "tags": ["machine-learning", "foundations"]
+        },
+        {
+          "title": "CS229 - Machine Learning (Stanford)",
+          "url": "https://cs229.stanford.edu/",
+          "description": "Stanford's rigorous ML course covering the mathematical foundations of machine learning algorithms.",
+          "level": "advanced",
+          "cost": "free",
+          "provider": "Stanford University",
+          "tags": ["machine-learning", "math", "theory"]
+        },
+        {
+          "title": "Deep Learning Specialization",
+          "url": "https://www.coursera.org/specializations/deep-learning",
+          "description": "Five-course specialization covering neural networks, CNNs, RNNs, and structuring ML projects.",
+          "level": "intermediate",
+          "cost": "freemium",
+          "provider": "Coursera / deeplearning.ai",
+          "tags": ["deep-learning", "neural-networks"]
+        },
+        {
+          "title": "CS50's Introduction to AI with Python",
+          "url": "https://cs50.harvard.edu/ai/",
+          "description": "Harvard's intro AI course covering search, knowledge, uncertainty, optimization, learning, and NLP.",
+          "level": "beginner",
+          "cost": "free",
+          "provider": "Harvard / edX",
+          "tags": ["ai-fundamentals", "python"]
+        },
+        {
+          "title": "Full Stack Deep Learning",
+          "url": "https://fullstackdeeplearning.com/",
+          "description": "Learn to build production ML systems. Covers MLOps, deployment, testing, and team workflows.",
+          "level": "advanced",
+          "cost": "free",
+          "provider": "FSDL",
+          "tags": ["mlops", "production", "deployment"]
+        },
+        {
+          "title": "Hugging Face NLP Course",
+          "url": "https://huggingface.co/learn/nlp-course",
+          "description": "Practical NLP course using the Transformers library. Build and fine-tune language models.",
+          "level": "intermediate",
+          "cost": "free",
+          "provider": "Hugging Face",
+          "tags": ["nlp", "transformers", "huggingface"]
+        },
+        {
+          "title": "DataCamp AI & ML Tracks",
+          "url": "https://www.datacamp.com/tracks/machine-learning-scientist-with-python",
+          "description": "Interactive, browser-based courses on ML and AI with hands-on exercises and projects.",
+          "level": "beginner",
+          "cost": "paid",
+          "provider": "DataCamp",
+          "tags": ["interactive", "python", "data-science"]
+        }
+      ]
+    },
+    {
+      "id": "tutorials",
+      "name": "Tutorials & Guides",
+      "resources": [
+        {
+          "title": "Google Machine Learning Crash Course",
+          "url": "https://developers.google.com/machine-learning/crash-course",
+          "description": "Google's fast-paced ML course with video lectures, real-world case studies, and hands-on exercises.",
+          "level": "beginner",
+          "cost": "free",
+          "provider": "Google",
+          "tags": ["machine-learning", "tensorflow"]
+        },
+        {
+          "title": "PyTorch Tutorials",
+          "url": "https://pytorch.org/tutorials/",
+          "description": "Official PyTorch tutorials covering everything from basics to advanced topics like GANs and RL.",
+          "level": "intermediate",
+          "cost": "free",
+          "provider": "PyTorch",
+          "tags": ["pytorch", "deep-learning"]
+        },
+        {
+          "title": "TensorFlow Tutorials",
+          "url": "https://www.tensorflow.org/tutorials",
+          "description": "Step-by-step TensorFlow tutorials for beginners and experts. Includes Colab notebooks.",
+          "level": "intermediate",
+          "cost": "free",
+          "provider": "Google / TensorFlow",
+          "tags": ["tensorflow", "deep-learning"]
+        },
+        {
+          "title": "LangChain Documentation & Tutorials",
+          "url": "https://docs.langchain.com/",
+          "description": "Build LLM-powered applications with chains, agents, and retrieval. The leading LLM framework.",
+          "level": "intermediate",
+          "cost": "free",
+          "provider": "LangChain",
+          "tags": ["llm", "agents", "rag"]
+        },
+        {
+          "title": "Prompt Engineering Guide",
+          "url": "https://www.promptingguide.ai/",
+          "description": "Comprehensive guide to prompt engineering techniques, from basics to advanced methods like chain-of-thought.",
+          "level": "beginner",
+          "cost": "free",
+          "provider": "DAIR.AI",
+          "tags": ["prompt-engineering", "llm"]
+        },
+        {
+          "title": "Anthropic's Claude Documentation",
+          "url": "https://docs.anthropic.com/",
+          "description": "Official docs for building with Claude API. Covers prompting, tool use, and best practices.",
+          "level": "intermediate",
+          "cost": "free",
+          "provider": "Anthropic",
+          "tags": ["claude", "api", "llm"]
+        }
+      ]
+    },
+    {
+      "id": "books",
+      "name": "Books & Textbooks",
+      "resources": [
+        {
+          "title": "Dive into Deep Learning (d2l.ai)",
+          "url": "https://d2l.ai/",
+          "description": "Interactive deep learning textbook with code, math, and discussions. Used in courses at 500+ universities.",
+          "level": "intermediate",
+          "cost": "free",
+          "provider": "d2l.ai",
+          "tags": ["deep-learning", "textbook", "interactive"]
+        },
+        {
+          "title": "Hands-On Machine Learning (O'Reilly)",
+          "url": "https://www.oreilly.com/library/view/hands-on-machine-learning/9781098125974/",
+          "description": "Practical ML guide using Scikit-Learn, Keras, and TensorFlow. The most popular ML book.",
+          "level": "intermediate",
+          "cost": "paid",
+          "provider": "O'Reilly",
+          "tags": ["machine-learning", "scikit-learn", "practical"]
+        },
+        {
+          "title": "The Hundred-Page Machine Learning Book",
+          "url": "https://themlbook.com/",
+          "description": "Concise yet comprehensive ML book. Read-first-buy-later model. Great for quick reference.",
+          "level": "beginner",
+          "cost": "freemium",
+          "provider": "Andriy Burkov",
+          "tags": ["machine-learning", "concise"]
+        },
+        {
+          "title": "Deep Learning (Goodfellow et al.)",
+          "url": "https://www.deeplearningbook.org/",
+          "description": "The definitive deep learning textbook covering mathematical foundations, modern techniques, and research frontiers.",
+          "level": "advanced",
+          "cost": "free",
+          "provider": "MIT Press",
+          "tags": ["deep-learning", "theory", "math"]
+        },
+        {
+          "title": "Speech and Language Processing (Jurafsky & Martin)",
+          "url": "https://web.stanford.edu/~jurafsky/slp3/",
+          "description": "Comprehensive NLP textbook covering classical and neural approaches to language processing.",
+          "level": "advanced",
+          "cost": "free",
+          "provider": "Stanford",
+          "tags": ["nlp", "textbook", "linguistics"]
+        }
+      ]
+    },
+    {
+      "id": "tools",
+      "name": "Tools & Platforms",
+      "resources": [
+        {
+          "title": "Google Colab",
+          "url": "https://colab.research.google.com/",
+          "description": "Free Jupyter notebooks in the cloud with GPU access. No setup required.",
+          "level": "beginner",
+          "cost": "freemium",
+          "provider": "Google",
+          "tags": ["notebooks", "gpu", "cloud"]
+        },
+        {
+          "title": "Hugging Face Hub",
+          "url": "https://huggingface.co/",
+          "description": "The GitHub of ML. Host models, datasets, and Spaces. Access 500k+ pretrained models.",
+          "level": "beginner",
+          "cost": "freemium",
+          "provider": "Hugging Face",
+          "tags": ["models", "datasets", "community"]
+        },
+        {
+          "title": "Weights & Biases",
+          "url": "https://wandb.ai/",
+          "description": "ML experiment tracking, dataset versioning, and model management. Industry standard for MLOps.",
+          "level": "intermediate",
+          "cost": "freemium",
+          "provider": "Weights & Biases",
+          "tags": ["mlops", "experiment-tracking"]
+        },
+        {
+          "title": "Kaggle",
+          "url": "https://www.kaggle.com/",
+          "description": "ML competitions, datasets, notebooks, and free GPU. Great for learning through practice.",
+          "level": "beginner",
+          "cost": "free",
+          "provider": "Google / Kaggle",
+          "tags": ["competitions", "datasets", "community"]
+        },
+        {
+          "title": "Replicate",
+          "url": "https://replicate.com/",
+          "description": "Run open-source ML models via API. Easy deployment without managing infrastructure.",
+          "level": "intermediate",
+          "cost": "freemium",
+          "provider": "Replicate",
+          "tags": ["deployment", "api", "models"]
+        },
+        {
+          "title": "OpenAI API Platform",
+          "url": "https://platform.openai.com/",
+          "description": "Access GPT-4, DALL-E, Whisper and more via API. Includes playground for experimentation.",
+          "level": "intermediate",
+          "cost": "paid",
+          "provider": "OpenAI",
+          "tags": ["api", "gpt", "llm"]
+        }
+      ]
+    },
+    {
+      "id": "communities",
+      "name": "Communities & Forums",
+      "resources": [
+        {
+          "title": "r/MachineLearning",
+          "url": "https://www.reddit.com/r/MachineLearning/",
+          "description": "The largest ML community on Reddit. Research discussions, industry news, and Q&A.",
+          "level": "intermediate",
+          "cost": "free",
+          "provider": "Reddit",
+          "tags": ["community", "research", "discussion"]
+        },
+        {
+          "title": "Hugging Face Discord",
+          "url": "https://discord.gg/huggingface",
+          "description": "Active community of ML practitioners. Get help with models, share projects, and stay updated.",
+          "level": "beginner",
+          "cost": "free",
+          "provider": "Hugging Face",
+          "tags": ["community", "discord", "help"]
+        },
+        {
+          "title": "MLOps Community",
+          "url": "https://mlops.community/",
+          "description": "Community focused on production ML. Slack group, meetups, and resources for deploying models.",
+          "level": "advanced",
+          "cost": "free",
+          "provider": "MLOps Community",
+          "tags": ["mlops", "production", "community"]
+        },
+        {
+          "title": "Papers With Code",
+          "url": "https://paperswithcode.com/",
+          "description": "Track ML papers with their code implementations. Leaderboards, methods, and datasets.",
+          "level": "advanced",
+          "cost": "free",
+          "provider": "Papers With Code",
+          "tags": ["research", "papers", "benchmarks"]
+        }
+      ]
+    },
+    {
+      "id": "newsletters",
+      "name": "Newsletters & Blogs",
+      "resources": [
+        {
+          "title": "The Batch (deeplearning.ai)",
+          "url": "https://www.deeplearning.ai/the-batch/",
+          "description": "Weekly AI newsletter by Andrew Ng. Curated news, research highlights, and practical insights.",
+          "level": "beginner",
+          "cost": "free",
+          "provider": "deeplearning.ai",
+          "tags": ["newsletter", "weekly", "curated"]
+        },
+        {
+          "title": "Import AI",
+          "url": "https://importai.substack.com/",
+          "description": "Weekly AI newsletter by Jack Clark (co-founder of Anthropic). Policy, research, and industry analysis.",
+          "level": "intermediate",
+          "cost": "free",
+          "provider": "Jack Clark",
+          "tags": ["newsletter", "policy", "research"]
+        },
+        {
+          "title": "AI Tidbits",
+          "url": "https://aidigest.substack.com/",
+          "description": "Curated weekly digest of the most important AI developments, papers, and tools.",
+          "level": "beginner",
+          "cost": "free",
+          "provider": "Substack",
+          "tags": ["newsletter", "digest", "weekly"]
+        },
+        {
+          "title": "Lil'Log (Lilian Weng)",
+          "url": "https://lilianweng.github.io/",
+          "description": "In-depth technical blog posts on ML topics by OpenAI's Head of Safety Systems. Exceptional quality.",
+          "level": "advanced",
+          "cost": "free",
+          "provider": "Lilian Weng",
+          "tags": ["blog", "technical", "deep-dives"]
+        },
+        {
+          "title": "Ahead of AI (Sebastian Raschka)",
+          "url": "https://magazine.sebastianraschka.com/",
+          "description": "Monthly research summaries and practical ML insights from a leading ML educator and researcher.",
+          "level": "intermediate",
+          "cost": "freemium",
+          "provider": "Sebastian Raschka",
+          "tags": ["newsletter", "research", "practical"]
+        }
+      ]
+    }
+  ]
+}

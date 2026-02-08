@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Digest - Your AI News Hub</title>
+  <meta name="description" content="Stay updated with the latest AI news, research papers, and learning resources, intelligently ranked by popularity and importance.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+  <!-- App Bar -->
+  <header class="app-bar">
+    <div class="app-bar__left">
+      <img src="assets/favicon.svg" alt="" class="app-bar__logo">
+      <h1 class="app-bar__title">AI <span>Digest</span></h1>
+    </div>
+    <div class="app-bar__actions">
+      <span class="last-updated" id="lastUpdated"></span>
+      <button class="icon-btn" id="refreshBtn" title="Refresh all sources">
+        <span class="material-icons-outlined">refresh</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Highlights Section -->
+  <section class="highlights" id="highlights">
+    <div class="highlights__inner">
+      <div class="highlights__section highlights__section--full">
+        <h2 class="highlights__heading">
+          <span class="material-icons-outlined">bolt</span>
+          This Week's Major Releases
+        </h2>
+        <div class="highlights__cards" id="highlightsWeek">
+          <div class="highlights__empty">Loading highlights...</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tab Bar -->
+  <nav class="tab-bar" id="tabBar">
+    <button class="tab active" data-tab="news">
+      <span class="material-icons-outlined">newspaper</span>
+      News
+      <span class="badge" id="newsCount"></span>
+    </button>
+    <button class="tab" data-tab="releases">
+      <span class="material-icons-outlined">rocket_launch</span>
+      Releases
+      <span class="badge" id="releasesCount"></span>
+    </button>
+    <button class="tab" data-tab="papers">
+      <span class="material-icons-outlined">science</span>
+      Papers
+      <span class="badge" id="papersCount"></span>
+    </button>
+    <button class="tab" data-tab="resources">
+      <span class="material-icons-outlined">school</span>
+      Resources
+    </button>
+    <button class="tab" data-tab="archive">
+      <span class="material-icons-outlined">inventory_2</span>
+      Archive
+      <span class="badge" id="archiveCount"></span>
+    </button>
+  </nav>
+
+  <!-- Content -->
+  <main class="content" id="content">
+    <!-- News Panel -->
+    <section class="panel active" id="panel-news">
+      <div class="panel-toolbar">
+        <div class="search-bar">
+          <span class="material-icons-outlined">search</span>
+          <input type="text" class="search-input" id="newsSearch" placeholder="Filter news..." autocomplete="off">
+        </div>
+        <div class="sort-control">
+          <span class="material-icons-outlined">sort</span>
+          <select id="newsSort" class="sort-select">
+            <option value="relevance" selected>Relevance</option>
+            <option value="newest">Newest First</option>
+            <option value="popular">Most Popular</option>
+          </select>
+        </div>
+      </div>
+      <div class="topic-filters" id="newsTopicFilters">
+        <span class="source-filters__label">Topics:</span>
+        <button class="filter-chip active" data-topic="all">All</button>
+        <button class="filter-chip filter-chip--inference" data-topic="inference">LLM Inference</button>
+        <button class="filter-chip" data-topic="models">Models</button>
+        <button class="filter-chip" data-topic="tools">Tools</button>
+      </div>
+      <div class="source-filters" id="newsSourceFilters"></div>
+      <div class="card-grid" id="newsGrid"></div>
+    </section>
+
+    <!-- Releases Panel -->
+    <section class="panel" id="panel-releases">
+      <div class="panel-toolbar">
+        <div class="search-bar">
+          <span class="material-icons-outlined">search</span>
+          <input type="text" class="search-input" id="releasesSearch" placeholder="Search models, tools, frameworks..." autocomplete="off">
+        </div>
+        <div class="sort-control">
+          <span class="material-icons-outlined">sort</span>
+          <select id="releasesSort" class="sort-select">
+            <option value="relevance" selected>Relevance</option>
+            <option value="newest">Newest First</option>
+            <option value="popular">Most Popular</option>
+          </select>
+        </div>
+      </div>
+      <div class="topic-filters" id="releasesTopicFilters">
+        <span class="source-filters__label">Topics:</span>
+        <button class="filter-chip active" data-topic="all">All</button>
+        <button class="filter-chip filter-chip--inference" data-topic="inference">LLM Inference</button>
+        <button class="filter-chip" data-topic="models">Models</button>
+        <button class="filter-chip" data-topic="tools">Tools</button>
+      </div>
+      <div class="source-filters" id="releasesSourceFilters"></div>
+      <div class="card-grid" id="releasesGrid"></div>
+    </section>
+
+    <!-- Papers Panel -->
+    <section class="panel" id="panel-papers">
+      <div class="panel-toolbar">
+        <div class="search-bar">
+          <span class="material-icons-outlined">search</span>
+          <input type="text" class="search-input" id="papersSearch" placeholder="Filter papers..." autocomplete="off">
+        </div>
+        <div class="sort-control">
+          <span class="material-icons-outlined">sort</span>
+          <select id="papersSort" class="sort-select">
+            <option value="relevance" selected>Relevance</option>
+            <option value="newest">Newest First</option>
+            <option value="popular">Most Cited</option>
+          </select>
+        </div>
+      </div>
+      <div class="source-filters" id="papersSourceFilters"></div>
+      <div class="card-grid" id="papersGrid"></div>
+    </section>
+
+    <!-- Resources Panel -->
+    <section class="panel" id="panel-resources">
+      <div class="resources-filter-bar" id="resourcesFilters">
+        <div class="filter-group">
+          <span class="filter-group__label">Cost:</span>
+          <button class="filter-chip active" data-filter="cost" data-value="all">All</button>
+          <button class="filter-chip" data-filter="cost" data-value="free">Free</button>
+          <button class="filter-chip" data-filter="cost" data-value="freemium">Freemium</button>
+          <button class="filter-chip" data-filter="cost" data-value="paid">Paid</button>
+        </div>
+        <div class="filter-group">
+          <span class="filter-group__label">Level:</span>
+          <button class="filter-chip active" data-filter="level" data-value="all">All</button>
+          <button class="filter-chip" data-filter="level" data-value="beginner">Beginner</button>
+          <button class="filter-chip" data-filter="level" data-value="intermediate">Intermediate</button>
+          <button class="filter-chip" data-filter="level" data-value="advanced">Advanced</button>
+        </div>
+      </div>
+      <div id="resourcesContent"></div>
+    </section>
+
+    <!-- Archive Panel -->
+    <section class="panel" id="panel-archive">
+      <div class="panel-toolbar">
+        <div class="search-bar">
+          <span class="material-icons-outlined">search</span>
+          <input type="text" class="search-input" id="archiveSearch" placeholder="Search archive..." autocomplete="off">
+        </div>
+        <div class="sort-control">
+          <span class="material-icons-outlined">sort</span>
+          <select id="archiveSort" class="sort-select">
+            <option value="newest" selected>Newest First</option>
+            <option value="relevance">Relevance</option>
+            <option value="popular">Most Popular</option>
+          </select>
+        </div>
+      </div>
+      <div class="source-filters" id="archiveSourceFilters"></div>
+      <div class="card-grid" id="archiveGrid"></div>
+    </section>
+  </main>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

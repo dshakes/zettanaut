@@ -1,0 +1,257 @@
+{
+  "lastUpdated": "2026-02-07",
+  "releases": [
+    {
+      "title": "Claude Opus 4.6 Released",
+      "url": "https://www.anthropic.com/news",
+      "description": "Anthropic's most capable model yet. Opus 4.6 delivers major improvements in reasoning, coding, and multi-step tasks. Available via API and Claude.ai.",
+      "company": "Anthropic",
+      "category": "model",
+      "date": "2026-02-05",
+      "significance": 95
+    },
+    {
+      "title": "Claude Code CLI -- AI-Powered Terminal Agent",
+      "url": "https://docs.anthropic.com/en/docs/claude-code",
+      "description": "Anthropic's official CLI tool that brings Claude directly into your terminal. Autonomous coding agent with file editing, git, and shell capabilities.",
+      "company": "Anthropic",
+      "category": "tool",
+      "date": "2025-10-01",
+      "significance": 90
+    },
+    {
+      "title": "Claude Sonnet 4.5 Released",
+      "url": "https://www.anthropic.com/news",
+      "description": "Anthropic's Sonnet 4.5 brings hybrid extended thinking, improved coding, and better agentic tool use at a balanced cost-performance point.",
+      "company": "Anthropic",
+      "category": "model",
+      "date": "2025-09-01",
+      "significance": 90
+    },
+    {
+      "title": "OpenAI Codex -- Autonomous Coding Agent",
+      "url": "https://openai.com/index/introducing-codex/",
+      "description": "OpenAI's cloud-based coding agent. Runs in a sandboxed environment, handles multi-file tasks, writes tests, and creates PRs autonomously.",
+      "company": "OpenAI",
+      "category": "tool",
+      "date": "2026-02-04",
+      "significance": 92
+    },
+    {
+      "title": "GPT-4.1 Series Released",
+      "url": "https://openai.com/index/gpt-4-1/",
+      "description": "OpenAI's GPT-4.1, GPT-4.1 mini, and GPT-4.1 nano models. Optimized for coding, instruction following, and long-context tasks up to 1M tokens.",
+      "company": "OpenAI",
+      "category": "model",
+      "date": "2025-04-14",
+      "significance": 93
+    },
+    {
+      "title": "GPT-4o Released -- Omni Model",
+      "url": "https://openai.com/index/hello-gpt-4o/",
+      "description": "OpenAI's multimodal model unifying text, vision, and audio in a single model. 2x faster and 50% cheaper than GPT-4 Turbo.",
+      "company": "OpenAI",
+      "category": "model",
+      "date": "2024-05-13",
+      "significance": 95
+    },
+    {
+      "title": "Gemini 2.5 Pro Released",
+      "url": "https://blog.google/technology/google-deepmind/gemini-model-thinking-updates-march-2025/",
+      "description": "Google's most capable thinking model. Excels at reasoning, coding, math, and science with native thinking capabilities.",
+      "company": "Google",
+      "category": "model",
+      "date": "2025-03-25",
+      "significance": 94
+    },
+    {
+      "title": "Gemini 2.5 Flash Released",
+      "url": "https://blog.google/technology/google-deepmind/gemini-2-5-flash/",
+      "description": "Google's fastest thinking model. Excellent performance-to-cost ratio with native tool use and thinking capabilities.",
+      "company": "Google",
+      "category": "model",
+      "date": "2025-04-17",
+      "significance": 88
+    },
+    {
+      "title": "Kimi k1.5 -- Moonshot AI Reasoning Model",
+      "url": "https://kimi.moonshot.cn/",
+      "description": "Moonshot AI's reasoning model rivaling o1 on math and coding benchmarks. Uses reinforcement learning for long-form chain-of-thought reasoning.",
+      "company": "Moonshot AI",
+      "category": "model",
+      "date": "2025-01-20",
+      "significance": 82
+    },
+    {
+      "title": "DeepSeek V3 & R1 Released",
+      "url": "https://github.com/deepseek-ai/DeepSeek-V3",
+      "description": "DeepSeek's open-source V3 model and R1 reasoning model. Competitive with frontier models at a fraction of the training cost. Fully open weights.",
+      "company": "DeepSeek",
+      "category": "model",
+      "date": "2025-01-20",
+      "significance": 93
+    },
+    {
+      "title": "Llama 4 Scout & Maverick Released",
+      "url": "https://ai.meta.com/blog/llama-4-multimodal-intelligence/",
+      "description": "Meta's Llama 4 family: Scout (17B active params, 16 experts, 10M context) and Maverick (17B active, 128 experts). Natively multimodal with industry-leading performance.",
+      "company": "Meta",
+      "category": "model",
+      "date": "2025-04-05",
+      "significance": 94
+    },
+    {
+      "title": "Mistral Large 2 Released",
+      "url": "https://mistral.ai/news/mistral-large-2/",
+      "description": "Mistral's 123B parameter flagship model. Strong coding, math, and multilingual capabilities with 128k context window.",
+      "company": "Mistral AI",
+      "category": "model",
+      "date": "2024-07-24",
+      "significance": 85
+    },
+    {
+      "title": "Grok 3 Released by xAI",
+      "url": "https://x.ai/blog/grok-3",
+      "description": "xAI's Grok 3 with reasoning capabilities. Trained on Colossus, one of the world's largest GPU clusters. Available on X platform.",
+      "company": "xAI",
+      "category": "model",
+      "date": "2025-02-17",
+      "significance": 88
+    },
+    {
+      "title": "Cursor -- AI Code Editor",
+      "url": "https://cursor.com/",
+      "description": "AI-first code editor built on VS Code. Features inline editing, multi-file context, and autonomous coding with Claude and GPT models.",
+      "company": "Cursor",
+      "category": "tool",
+      "date": "2024-09-01",
+      "significance": 88
+    },
+    {
+      "title": "Windsurf Editor by Codeium",
+      "url": "https://codeium.com/windsurf",
+      "description": "AI-powered IDE with Cascade, an agentic coding assistant that understands your entire codebase and makes multi-file changes.",
+      "company": "Codeium",
+      "category": "tool",
+      "date": "2024-11-13",
+      "significance": 82
+    },
+    {
+      "title": "GitHub Copilot Agent Mode",
+      "url": "https://github.blog/changelog/2025-02-07-github-copilot-agent-mode-in-vs-code-preview/",
+      "description": "GitHub Copilot gains autonomous agent capabilities. Can plan, execute multi-step tasks, run terminal commands, and iterate on code.",
+      "company": "GitHub / Microsoft",
+      "category": "tool",
+      "date": "2026-02-07",
+      "significance": 90
+    },
+    {
+      "title": "Sora -- OpenAI Video Generation",
+      "url": "https://openai.com/sora",
+      "description": "OpenAI's text-to-video model capable of generating realistic videos up to a minute long from text prompts.",
+      "company": "OpenAI",
+      "category": "model",
+      "date": "2024-12-09",
+      "significance": 92
+    },
+    {
+      "title": "Stable Diffusion 3.5 Released",
+      "url": "https://stability.ai/news/introducing-stable-diffusion-3-5",
+      "description": "Stability AI's latest image generation model family with improved prompt adherence, typography, and photorealism.",
+      "company": "Stability AI",
+      "category": "model",
+      "date": "2024-10-22",
+      "significance": 80
+    },
+    {
+      "title": "Perplexity Sonar -- Real-Time AI Search",
+      "url": "https://www.perplexity.ai/",
+      "description": "AI-powered search engine providing cited, real-time answers. Sonar API enables developers to build search-augmented AI applications.",
+      "company": "Perplexity",
+      "category": "tool",
+      "date": "2025-01-01",
+      "significance": 82
+    },
+    {
+      "title": "Ollama -- Run LLMs Locally",
+      "url": "https://ollama.com/",
+      "description": "Run Llama, Mistral, Gemma, and other open-source models locally on your machine. Simple CLI interface with model management.",
+      "company": "Ollama",
+      "category": "tool",
+      "date": "2025-01-15",
+      "significance": 85
+    },
+    {
+      "title": "Qwen 2.5 Released by Alibaba",
+      "url": "https://qwenlm.github.io/blog/qwen2.5/",
+      "description": "Alibaba's open-source Qwen 2.5 family: 0.5B to 72B params. Strong multilingual, coding, and math capabilities. Apache 2.0 license.",
+      "company": "Alibaba",
+      "category": "model",
+      "date": "2024-09-19",
+      "significance": 83
+    },
+    {
+      "title": "Microsoft Phi-4 Released",
+      "url": "https://azure.microsoft.com/en-us/blog/empowering-innovation-the-latest-phi-4-small-language-models/",
+      "description": "Microsoft's small language model (14B params) that punches above its weight. Excels at reasoning and STEM tasks, rivaling much larger models.",
+      "company": "Microsoft",
+      "category": "model",
+      "date": "2024-12-12",
+      "significance": 80
+    },
+    {
+      "title": "Flux.1 -- Black Forest Labs Image Model",
+      "url": "https://blackforestlabs.ai/",
+      "description": "Open-source text-to-image model rivaling DALL-E 3 and Midjourney. Available in Pro, Dev, and Schnell variants.",
+      "company": "Black Forest Labs",
+      "category": "model",
+      "date": "2024-08-01",
+      "significance": 82
+    },
+    {
+      "title": "v0 by Vercel -- AI UI Generator",
+      "url": "https://v0.dev/",
+      "description": "AI-powered UI generation tool. Describe a component and get production-ready React/Tailwind code instantly.",
+      "company": "Vercel",
+      "category": "tool",
+      "date": "2024-10-01",
+      "significance": 78
+    },
+    {
+      "title": "Replit Agent -- Build Full Apps with AI",
+      "url": "https://replit.com/ai",
+      "description": "Replit's autonomous AI agent builds and deploys full-stack applications from natural language descriptions.",
+      "company": "Replit",
+      "category": "tool",
+      "date": "2024-09-01",
+      "significance": 80
+    },
+    {
+      "title": "vLLM 0.7 -- High-Throughput LLM Serving",
+      "url": "https://blog.vllm.ai/2025/01/27/v0.7.0.html",
+      "description": "Major vLLM release with V1 architecture: 1.7x throughput improvement, disaggregated prefill, multi-node tensor parallelism, and improved prefix caching.",
+      "company": "vLLM",
+      "category": "inference",
+      "date": "2025-01-27",
+      "significance": 85
+    },
+    {
+      "title": "SGLang v0.4 -- Fast LLM Inference Engine",
+      "url": "https://github.com/sgl-project/sglang",
+      "description": "SGLang inference engine with RadixAttention, speculative decoding, structured generation, and multi-modal support. Zero-overhead batch scheduling.",
+      "company": "SGLang",
+      "category": "inference",
+      "date": "2025-01-15",
+      "significance": 78
+    },
+    {
+      "title": "TensorRT-LLM -- NVIDIA LLM Optimization",
+      "url": "https://github.com/NVIDIA/TensorRT-LLM",
+      "description": "NVIDIA's high-performance inference library for LLMs. In-flight batching, paged KV cache, FP8/INT4 quantization, and multi-GPU tensor parallelism.",
+      "company": "NVIDIA",
+      "category": "inference",
+      "date": "2025-02-01",
+      "significance": 82
+    }
+  ]
+}
