@@ -658,52 +658,78 @@ a:hover {
     display: none;
   }
 
-  /* Highlights */
+  /* Highlights — compact list on mobile */
   .highlights {
-    padding: 14px 12px;
+    padding: 12px;
   }
 
   .highlights__heading {
     font-size: 12px;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
 
   .highlights__cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    overflow-x: visible;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    overflow: visible;
+    flex-wrap: nowrap;
+    background: var(--md-surface);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--elevation-1);
   }
 
   .highlight-card {
+    flex-direction: row;
+    align-items: center;
     min-width: 0;
     max-width: none;
-    flex-shrink: 1;
+    flex-shrink: 0;
     padding: 10px 12px;
-    gap: 4px;
+    gap: 10px;
+    border-radius: 0;
+    box-shadow: none;
+    border-left: 3px solid transparent;
+    border-bottom: 1px solid var(--md-grey-200);
+  }
+
+  .highlight-card:last-child {
+    border-bottom: none;
+  }
+
+  .highlight-card:first-child {
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  }
+
+  .highlight-card:last-child {
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
   }
 
   .highlight-card__company {
     font-size: 9px;
+    min-width: 48px;
+    flex-shrink: 0;
   }
 
   .highlight-card__title {
-    font-size: 12px;
-    -webkit-line-clamp: 2;
+    flex: 1;
+    font-size: 13px;
+    min-width: 0;
+    -webkit-line-clamp: 1;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     line-height: 1.3;
   }
 
   .highlight-card__category {
+    flex-shrink: 0;
     font-size: 9px;
     padding: 1px 5px;
   }
 
   .highlight-card__meta {
-    font-size: 10px;
-  }
-
-  .highlight-card__meta .material-icons-outlined {
-    font-size: 11px;
+    display: none;
   }
 
   /* Tab Bar */
@@ -824,16 +850,9 @@ a:hover {
     display: none;
   }
 
-  .highlights__cards {
-    grid-template-columns: 1fr;
-  }
-
   .highlight-card {
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    border-left-width: 3px;
+    padding: 8px 10px;
+    gap: 6px;
   }
 
   .highlight-card__company {
@@ -841,17 +860,7 @@ a:hover {
   }
 
   .highlight-card__title {
-    flex: 1;
     font-size: 12px;
-    -webkit-line-clamp: 1;
-  }
-
-  .highlight-card__category {
-    flex-shrink: 0;
-  }
-
-  .highlight-card__meta {
-    display: none;
   }
 
   .app-bar__title {
