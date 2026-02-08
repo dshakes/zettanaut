@@ -425,3 +425,71 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
+
+/* ===== Mobile Component Overrides ===== */
+@media (max-width: 600px) {
+  .card {
+    padding: 14px;
+    gap: 8px;
+  }
+
+  .card__title {
+    font-size: 14px;
+  }
+
+  .card__description {
+    font-size: 12px;
+    -webkit-line-clamp: 2;
+  }
+
+  .card__meta {
+    gap: 10px;
+    font-size: 11px;
+  }
+
+  .card__source-badge {
+    font-size: 9px;
+    padding: 2px 6px;
+  }
+
+  .card__tag {
+    font-size: 10px;
+    padding: 1px 6px;
+  }
+
+  .resource-card {
+    padding: 14px;
+    gap: 8px;
+  }
+
+  .resource-card__title {
+    font-size: 14px;
+  }
+
+  .resource-card__description {
+    font-size: 12px;
+  }
+
+  .filter-chip {
+    font-size: 12px;
+    padding: 5px 12px;
+  }
+
+  .skeleton-card {
+    padding: 14px;
+  }
+
+  .category-section__title {
+    font-size: 16px;
+  }
+
+  .resources-filter-bar {
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .filter-group {
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+}

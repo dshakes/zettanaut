@@ -595,40 +595,269 @@ a:hover {
   color: var(--md-grey-600);
 }
 
-/* Responsive */
+/* ===== Responsive: Large Desktop (1200px+) ===== */
+@media (min-width: 1200px) {
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ===== Responsive: Tablet Portrait & Landscape (601px - 1024px) ===== */
+@media (max-width: 1024px) {
+  .highlights__cards {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .highlight-card {
+    min-width: 200px;
+  }
+}
+
+/* ===== Responsive: Small Tablet / Large Phone (601px - 768px) ===== */
+@media (max-width: 768px) {
+  .content {
+    padding: 16px;
+  }
+
+  .search-input {
+    max-width: 100%;
+  }
+}
+
+/* ===== Responsive: Mobile (max-width: 600px) ===== */
 @media (max-width: 600px) {
+  /* App Bar */
   .app-bar {
-    padding: 0 16px;
-    height: 56px;
+    padding: 0 12px;
+    height: 52px;
+  }
+
+  .app-bar__logo {
+    width: 26px;
+    height: 26px;
+  }
+
+  .app-bar__left {
+    gap: 8px;
   }
 
   .app-bar__title {
-    font-size: 18px;
-  }
-
-  .tab-bar {
-    padding: 0 8px;
-  }
-
-  .tab {
-    padding: 12px 16px;
-    font-size: 13px;
-  }
-
-  .content {
-    padding: 16px;
+    font-size: 17px;
   }
 
   .last-updated {
     display: none;
   }
 
+  /* Highlights */
+  .highlights {
+    padding: 14px 12px;
+  }
+
+  .highlights__heading {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+
+  .highlights__cards {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 8px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .highlight-card {
+    min-width: 160px;
+    max-width: 200px;
+    padding: 10px 12px;
+    scroll-snap-align: start;
+  }
+
+  .highlight-card__title {
+    font-size: 12px;
+  }
+
+  .highlight-card__company {
+    font-size: 9px;
+  }
+
+  /* Tab Bar */
+  .tab-bar {
+    padding: 0;
+  }
+
+  .tab {
+    padding: 10px 12px;
+    font-size: 12px;
+    gap: 4px;
+  }
+
+  .tab .material-icons-outlined {
+    font-size: 18px;
+  }
+
+  .tab .badge {
+    font-size: 10px;
+    padding: 1px 6px;
+  }
+
+  /* Content */
+  .content {
+    padding: 12px;
+  }
+
+  /* Panel Toolbar */
   .panel-toolbar {
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .panel-toolbar .search-bar {
+    width: 100%;
+  }
+
+  .search-input {
+    max-width: 100%;
+    height: 40px;
+    font-size: 14px;
   }
 
   .sort-control {
-    width: 100%;
-    justify-content: flex-end;
+    align-self: flex-end;
+  }
+
+  /* Source & Topic Filters */
+  .source-filters {
+    gap: 6px;
+    padding: 0 0 12px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .source-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .topic-filters {
+    gap: 6px;
+    padding: 0 0 8px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .topic-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Card Grid */
+  .card-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  /* Toast */
+  .toast-container {
+    left: 12px;
+    right: 12px;
+    transform: none;
+    bottom: 16px;
+  }
+
+  .toast {
+    max-width: 100%;
+    font-size: 13px;
+    padding: 10px 16px;
+  }
+
+  /* Empty State */
+  .empty-state {
+    padding: 40px 16px;
+  }
+
+  .empty-state .material-icons-outlined {
+    font-size: 48px;
+  }
+
+  .empty-state h3 {
+    font-size: 17px;
+  }
+}
+
+/* ===== Responsive: Very Small Phones (max-width: 380px) ===== */
+@media (max-width: 380px) {
+  .tab {
+    padding: 10px 8px;
+    font-size: 11px;
+  }
+
+  .tab .badge {
+    display: none;
+  }
+
+  .highlight-card {
+    min-width: 140px;
+    max-width: 170px;
+  }
+
+  .app-bar__title {
+    font-size: 15px;
+  }
+}
+
+/* ===== Touch Device Improvements ===== */
+@media (hover: none) and (pointer: coarse) {
+  .card:hover {
+    box-shadow: var(--elevation-1);
+    transform: none;
+  }
+
+  .highlight-card:hover {
+    box-shadow: var(--elevation-1);
+    transform: none;
+  }
+
+  .card:active {
+    box-shadow: var(--elevation-2);
+    transform: translateY(-1px);
+  }
+
+  .highlight-card:active {
+    box-shadow: var(--elevation-2);
+    transform: translateY(-1px);
+  }
+
+  .icon-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .filter-chip {
+    padding: 8px 14px;
+    min-height: 36px;
+  }
+}
+
+/* ===== Safe Area (notch devices) ===== */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .app-bar {
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+  }
+
+  .content {
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+  }
+
+  .toast-container {
+    bottom: max(16px, env(safe-area-inset-bottom));
   }
 }
