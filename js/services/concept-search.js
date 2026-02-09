@@ -571,11 +571,12 @@ async function readAnthropicStream(res, detail, conceptName) {
   return parseResponse(accumulated);
 }
 
-// ─── Streaming Preview (show raw text as it arrives) ───
+// ─── Streaming Progress (update loading text as data arrives) ───
 function updateStreamingPreview(detail, conceptName, text) {
-  const streamEl = detail.querySelector('.ai-atlas__stream-content');
-  if (streamEl) {
-    streamEl.textContent = text;
+  const label = detail.querySelector('.ai-atlas__loading-text');
+  if (label) {
+    const dots = '.'.repeat(1 + (Math.floor(text.length / 80) % 3));
+    label.textContent = `Generating explanation${dots}`;
   }
 }
 
@@ -622,12 +623,7 @@ function renderLoading(conceptName) {
         <h2 class="ai-atlas__card-title">${esc(conceptName)}</h2>
         <div class="ai-atlas__loading-indicator">
           <span class="material-icons-outlined ai-atlas__loading-spin">auto_awesome</span>
-          <span>Generating explanation...</span>
-        </div>
-      </div>
-      <div class="ai-atlas__card-body">
-        <div class="ai-atlas__stream-preview">
-          <pre class="ai-atlas__stream-content"></pre>
+          <span class="ai-atlas__loading-text">Generating explanation...</span>
         </div>
       </div>
     </div>

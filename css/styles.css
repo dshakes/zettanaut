@@ -391,6 +391,12 @@ a:hover {
   line-height: 1;
 }
 
+.highlight-card__logo svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
 .highlight-card__logo--sm {
   font-size: 10px;
   letter-spacing: -0.5px;
@@ -501,6 +507,11 @@ a:hover {
     height: 22px;
     font-size: 11px;
     border-radius: 5px;
+  }
+
+  .highlight-card__logo svg {
+    width: 14px;
+    height: 14px;
   }
 
   .highlight-card__logo--sm {

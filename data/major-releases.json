@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-02-07",
+  "lastUpdated": "2026-02-09",
   "releases": [
     {
       "title": "Claude Opus 4.6 Released",
@@ -36,6 +36,60 @@
       "category": "tool",
       "date": "2026-02-04",
       "significance": 92
+    },
+    {
+      "title": "GPT-5.2 Released -- Frontier Intelligence",
+      "url": "https://openai.com/index/introducing-gpt-5-2/",
+      "description": "OpenAI's most advanced model for professional work and long-running agents. Major improvements in general intelligence, long-context understanding, and agentic tool-calling.",
+      "company": "OpenAI",
+      "category": "model",
+      "date": "2025-12-11",
+      "significance": 95
+    },
+    {
+      "title": "Gemini 3 Flash Released",
+      "url": "https://blog.google/products/gemini/gemini-3-flash/",
+      "description": "Google's frontier model built for speed. Surpasses Gemini 2.5 Pro on many benchmarks at less than a quarter the cost of Gemini 3 Pro. Available across all Google AI platforms.",
+      "company": "Google",
+      "category": "model",
+      "date": "2025-12-17",
+      "significance": 90
+    },
+    {
+      "title": "Claude Opus 4.5 Released",
+      "url": "https://www.anthropic.com/news/claude-opus-4-5",
+      "description": "Anthropic's best model for coding, agents, and computer use. 80.9% on SWE-bench Verified. $5/$25 per million tokens with Plan Mode upgrades for Claude Code.",
+      "company": "Anthropic",
+      "category": "model",
+      "date": "2025-11-24",
+      "significance": 95
+    },
+    {
+      "title": "Gemini 3 Pro Released",
+      "url": "https://blog.google/products/gemini/gemini-3-collection/",
+      "description": "Google's most capable multimodal model. 1M token context, Deep Think reasoning mode, and top LMArena score at 1501 Elo. Integrated across Search, Vertex AI, and developer tools.",
+      "company": "Google",
+      "category": "model",
+      "date": "2025-11-18",
+      "significance": 95
+    },
+    {
+      "title": "Grok 4.1 Released by xAI",
+      "url": "https://x.ai/news/grok-4-1",
+      "description": "xAI's Grok 4.1 with improved reasoning, multimodal understanding, and reduced hallucinations. #1 on LMArena Text Arena with Thinking mode at 1483 Elo.",
+      "company": "xAI",
+      "category": "model",
+      "date": "2025-11-17",
+      "significance": 90
+    },
+    {
+      "title": "GPT-5 Released -- Unified Intelligence",
+      "url": "https://openai.com/index/introducing-gpt-5/",
+      "description": "OpenAI's unified model with smart routing between fast and deep reasoning modes. State-of-the-art across coding (74.9% SWE-bench), math (94.6% AIME), and multimodal tasks.",
+      "company": "OpenAI",
+      "category": "model",
+      "date": "2025-08-07",
+      "significance": 96
     },
     {
       "title": "GPT-4.1 Series Released",
