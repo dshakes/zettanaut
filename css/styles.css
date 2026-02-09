@@ -976,7 +976,7 @@ a:hover {
   }
 
   .app-bar__tagline {
-    display: none;
+    font-size: 8px;
   }
 }
 
