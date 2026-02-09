@@ -763,6 +763,7 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   padding-top: 32px;
+  align-items: start;
 }
 
 .learning-path__tracks::before {
@@ -1037,6 +1038,49 @@
   font-size: 14px;
 }
 
+/* ===== Trending Resources ===== */
+.learning-path__trending {
+  border-top: 1px dashed var(--md-grey-200);
+}
+
+.learning-path__trending:empty {
+  display: none;
+}
+
+.learning-path__link--trending {
+  color: var(--md-grey-700);
+}
+
+.learning-path__link--trending .material-icons-outlined {
+  color: #E65100;
+}
+
+.learning-path__cost--trending {
+  background: #FFF3E0;
+  color: #E65100;
+}
+
+/* ===== Mobile Scroll Indicator Dots ===== */
+.learning-path__scroll-indicators {
+  display: none;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 0 4px;
+}
+
+.learning-path__scroll-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--md-grey-300);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.learning-path__scroll-dot.active {
+  background: var(--md-primary-600);
+  transform: scale(1.3);
+}
+
 /* ===== Learning Path — iPad Landscape / Small Desktop (900-1023px) ===== */
 @media (min-width: 900px) and (max-width: 1023px) {
   .learning-path__tracks {
@@ -1086,9 +1130,22 @@
 /* ===== Learning Path — Tablet / iPad Portrait (600-899px) ===== */
 @media (max-width: 899px) {
   .learning-path__tracks {
-    grid-template-columns: 1fr;
-    gap: 16px;
+    grid-template-columns: repeat(3, 80vw);
+    gap: 12px;
     padding-top: 0;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+
+  .learning-path__tracks::-webkit-scrollbar {
+    display: none;
+  }
+
+  .learning-path__track {
+    scroll-snap-align: start;
   }
 
   .learning-path__tracks::before,
@@ -1098,6 +1155,10 @@
 
   .learning-path__track-header {
     gap: 14px;
+  }
+
+  .learning-path__scroll-indicators {
+    display: flex;
   }
 }
 
@@ -1178,6 +1239,11 @@
     font-size: 11px;
     padding: 12px 0 4px;
     margin: 8px 0 12px;
+  }
+
+  /* Tracks: narrow scroll cards on mobile */
+  .learning-path__tracks {
+    grid-template-columns: repeat(3, 82vw);
   }
 
   /* Badge compact on mobile */
