@@ -377,23 +377,28 @@ a:hover {
 }
 
 .highlight-card__logo {
-  width: 26px;
-  height: 26px;
-  border-radius: 6px;
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   color: #fff;
   font-family: var(--font-display);
   line-height: 1;
 }
 
+.highlight-card__logo--svg {
+  background: var(--md-grey-50);
+  border: 1px solid var(--md-grey-200);
+}
+
 .highlight-card__logo svg {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   display: block;
 }
 
@@ -503,15 +508,15 @@ a:hover {
   }
 
   .highlight-card__logo {
-    width: 22px;
-    height: 22px;
-    font-size: 11px;
-    border-radius: 5px;
+    width: 26px;
+    height: 26px;
+    font-size: 12px;
+    border-radius: 6px;
   }
 
   .highlight-card__logo svg {
-    width: 14px;
-    height: 14px;
+    width: 17px;
+    height: 17px;
   }
 
   .highlight-card__logo--sm {
