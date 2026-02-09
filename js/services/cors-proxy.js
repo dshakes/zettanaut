@@ -28,6 +28,11 @@ export async function fetchWithProxy(url, options = {}) {
     try {
       const resp = await fetch(proxy.buildUrl(url), { ...options, signal: AbortSignal.timeout(8000) });
       if (resp.ok || resp.status === 304) {
+        // Guard against proxies returning HTML error pages as 200
+        const ct = resp.headers.get('content-type') || '';
+        if (ct.includes('text/html') && !url.includes('.html')) {
+          continue;
+        }
         proxyMemory[domain] = proxy.name;
         return resp;
       }

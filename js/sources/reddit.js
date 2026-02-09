@@ -1,37 +1,52 @@
-import { fetchJSON } from '../services/fetcher.js';
+import { fetchXML } from '../services/fetcher.js';
 import { cache } from '../services/cache.js';
 import { CONFIG } from '../config.js';
 
 const CACHE_KEY = 'reddit';
+
+function stripHTML(html) {
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html;
+  return tmp.textContent || '';
+}
 
 export async function fetchItems() {
   const cached = cache.get(CACHE_KEY);
   if (cached) return cached;
 
   const subs = CONFIG.SEARCH_QUERIES.reddit_subreddits;
-  const url = `https://www.reddit.com/r/${subs}/hot.json?limit=${CONFIG.MAX_ITEMS_PER_SOURCE}&raw_json=1`;
+  const url = `https://www.reddit.com/r/${subs}/.rss?limit=${CONFIG.MAX_ITEMS_PER_SOURCE}`;
 
-  const data = await fetchJSON(url, { useProxy: true });
-  const children = data?.data?.children || [];
+  const doc = await fetchXML(url, { useProxy: true });
 
-  const items = children
-    .filter(c => c.data && !c.data.stickied)
-    .map(c => {
-      const d = c.data;
+  const entries = doc.querySelectorAll('entry');
+  const items = Array.from(entries)
+    .map(entry => {
+      const title = entry.querySelector('title')?.textContent?.trim() || '';
+      const link = entry.querySelector('link')?.getAttribute('href') || '';
+      const author = entry.querySelector('author name')?.textContent?.trim().replace(/^\/u\//, '') || '';
+      const updated = entry.querySelector('updated')?.textContent || new Date().toISOString();
+      const content = entry.querySelector('content')?.textContent || '';
+      const category = entry.querySelector('category')?.getAttribute('term') || '';
+
+      // Skip stickied/automated posts
+      if (title.startsWith('[D] Self-Promotion') || title.startsWith('[D] Monthly')) return null;
+
       return {
-        id: `reddit-${d.id}`,
-        title: d.title || '',
-        url: d.url && !d.url.startsWith('/r/') ? d.url : `https://www.reddit.com${d.permalink}`,
-        description: d.selftext ? d.selftext.slice(0, 200) : '',
+        id: `reddit-${Array.from(link.slice(-20), c => c.charCodeAt(0).toString(36)).join('')}`,
+        title,
+        url: link,
+        description: stripHTML(content).slice(0, 200),
         source: 'reddit',
-        sourceName: `r/${d.subreddit}`,
-        author: d.author || '',
-        publishedAt: new Date(d.created_utc * 1000).toISOString(),
-        engagement: { score: d.score || 0, comments: d.num_comments || 0 },
-        tags: [d.subreddit],
+        sourceName: category ? `r/${category}` : 'Reddit',
+        author,
+        publishedAt: updated,
+        engagement: { score: 0, comments: 0 },
+        tags: category ? [category] : ['reddit'],
         type: 'news',
       };
-    });
+    })
+    .filter(Boolean);
 
   cache.set(CACHE_KEY, items, CONFIG.CACHE_TTL.news);
   return items;
