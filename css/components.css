@@ -496,12 +496,12 @@
 
 /* ===== Learning Path (AI Engineer Tab) ===== */
 .learning-path {
-  max-width: 860px;
+  max-width: 1100px;
   margin: 0 auto;
   padding-bottom: 48px;
 }
 
-/* Hero — matches .highlights section styling */
+/* Hero */
 .learning-path__hero {
   background: linear-gradient(135deg, var(--md-primary-50) 0%, #F0F4FF 50%, #F5F0FF 100%);
   border: 1px solid var(--md-grey-200);
@@ -557,9 +557,35 @@
   color: var(--md-primary-600);
 }
 
+/* Section heading */
+.learning-path__section-heading {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--md-grey-700);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.learning-path__section-heading .material-icons-outlined {
+  font-size: 18px;
+  color: var(--md-primary-600);
+}
+
+.learning-path__section-heading-sub {
+  font-weight: 400;
+  color: var(--md-grey-500);
+  margin-left: 4px;
+}
+
 /* Timeline */
 .learning-path__timeline {
   position: relative;
+  max-width: 860px;
 }
 
 /* Stage row: connector + card */
@@ -609,16 +635,11 @@
   font-size: 20px;
 }
 
-/* Stage colors — green → blue → purple → orange → gold */
+/* Stage node colors — all green for foundation */
 .learning-path__stage--1 .learning-path__node { background: #34A853; }
-.learning-path__stage--2 .learning-path__node { background: #1E8E3E; }
-.learning-path__stage--3 .learning-path__node { background: #1A73E8; }
-.learning-path__stage--4 .learning-path__node { background: #185ABC; }
-.learning-path__stage--5 .learning-path__node { background: #7B1FA2; }
-.learning-path__stage--6 .learning-path__node { background: #6A1B9A; }
-.learning-path__stage--7 .learning-path__node { background: #E65100; }
-.learning-path__stage--8 .learning-path__node { background: #EF6C00; }
-.learning-path__stage--9 .learning-path__node { background: #F9A825; }
+.learning-path__stage--2 .learning-path__node { background: #2E9A4D; }
+.learning-path__stage--3 .learning-path__node { background: #1E8E3E; }
+.learning-path__stage--4 .learning-path__node { background: #188038; }
 
 /* Card */
 .learning-path__card {
@@ -637,16 +658,11 @@
   transform: translateY(-1px);
 }
 
-/* Card left-border accent colors */
+/* Card left-border accent colors — all green for foundation */
 .learning-path__stage--1 .learning-path__card { border-left-color: #34A853; }
-.learning-path__stage--2 .learning-path__card { border-left-color: #1E8E3E; }
-.learning-path__stage--3 .learning-path__card { border-left-color: #1A73E8; }
-.learning-path__stage--4 .learning-path__card { border-left-color: #185ABC; }
-.learning-path__stage--5 .learning-path__card { border-left-color: #7B1FA2; }
-.learning-path__stage--6 .learning-path__card { border-left-color: #6A1B9A; }
-.learning-path__stage--7 .learning-path__card { border-left-color: #E65100; }
-.learning-path__stage--8 .learning-path__card { border-left-color: #EF6C00; }
-.learning-path__stage--9 .learning-path__card { border-left-color: #F9A825; }
+.learning-path__stage--2 .learning-path__card { border-left-color: #2E9A4D; }
+.learning-path__stage--3 .learning-path__card { border-left-color: #1E8E3E; }
+.learning-path__stage--4 .learning-path__card { border-left-color: #188038; }
 
 .learning-path__card-header {
   margin-bottom: 8px;
@@ -674,7 +690,6 @@
 .learning-path__stage-label--blue { background: #E3F2FD; color: #1565C0; }
 .learning-path__stage-label--purple { background: #F3E5F5; color: #6A1B9A; }
 .learning-path__stage-label--orange { background: #FFF3E0; color: #E65100; }
-.learning-path__stage-label--gold { background: #FFF8E1; color: #F57F17; }
 
 /* Duration badge */
 .learning-path__duration {
@@ -696,13 +711,6 @@
   font-weight: 500;
   color: var(--md-grey-900);
   margin-bottom: 6px;
-}
-
-.learning-path__card-desc {
-  font-size: 13px;
-  color: var(--md-grey-700);
-  line-height: 1.55;
-  margin-bottom: 14px;
 }
 
 /* Resource links */
@@ -756,34 +764,164 @@
 .learning-path__cost--freemium { background: #FFF8E1; color: #F57F17; }
 .learning-path__cost--paid { background: #FCE4EC; color: #C62828; }
 
-/* Achievement card */
-.learning-path__achievement {
+/* ===== Fork Divider ===== */
+.learning-path__fork {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--md-grey-700);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px 0 8px;
+  margin: 16px 0 24px;
+  position: relative;
+}
+
+.learning-path__fork::before,
+.learning-path__fork::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--md-grey-300);
+}
+
+.learning-path__fork .material-icons-outlined {
+  font-size: 20px;
+  color: var(--md-primary-600);
+}
+
+/* ===== Connector Lines (fork visual) ===== */
+.learning-path__tracks {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding-top: 24px;
+}
+
+.learning-path__tracks::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 16.66%;
+  right: 16.66%;
+  height: 24px;
+  border-left: 2px solid var(--md-grey-300);
+  border-right: 2px solid var(--md-grey-300);
+  border-top: 2px solid var(--md-grey-300);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.learning-path__tracks::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 24px;
+  background: var(--md-grey-300);
+  transform: translateX(-1px);
+}
+
+/* ===== Track Card ===== */
+.learning-path__track {
   background: var(--md-surface);
   border-radius: var(--radius-md);
   box-shadow: var(--elevation-1);
-  padding: 20px 24px;
-  margin-left: 48px;
-  border-left: 3px solid #F9A825;
+  border-top: 4px solid transparent;
+  overflow: hidden;
 }
 
-.learning-path__achievement .material-icons-outlined {
+.learning-path__track--blue  { border-top-color: #1A73E8; }
+.learning-path__track--orange { border-top-color: #E65100; }
+.learning-path__track--purple { border-top-color: #7B1FA2; }
+
+/* Track header */
+.learning-path__track-header {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid var(--md-grey-100);
+}
+
+.learning-path__track-icon {
   font-size: 28px;
-  color: #F9A825;
+  margin-bottom: 8px;
 }
 
-.learning-path__achievement-label {
+.learning-path__track--blue .learning-path__track-icon  { color: #1A73E8; }
+.learning-path__track--orange .learning-path__track-icon { color: #E65100; }
+.learning-path__track--purple .learning-path__track-icon { color: #7B1FA2; }
+
+.learning-path__track-title {
   font-family: var(--font-display);
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 500;
   color: var(--md-grey-900);
+  margin-bottom: 4px;
 }
 
-.learning-path__achievement-sub {
-  font-size: 13px;
+.learning-path__track-desc {
+  font-size: 12px;
   color: var(--md-grey-600);
+  line-height: 1.5;
+}
+
+/* Track stage section */
+.learning-path__track-stage {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--md-grey-100);
+}
+
+.learning-path__track-stage:last-child {
+  border-bottom: none;
+}
+
+.learning-path__track-stage-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.learning-path__track-stage-title {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--md-grey-900);
+  margin-bottom: 6px;
+}
+
+/* Track stage resources reuse .learning-path__resources and __link */
+.learning-path__track-stage .learning-path__resources {
+  border-top: none;
+}
+
+.learning-path__track-stage .learning-path__link {
+  padding: 7px 0;
+  font-size: 12px;
+  gap: 6px;
+}
+
+.learning-path__track-stage .learning-path__link .material-icons-outlined {
+  font-size: 14px;
+}
+
+/* ===== Learning Path — Tablet (600-899px) ===== */
+@media (max-width: 899px) {
+  .learning-path__tracks {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding-top: 0;
+  }
+
+  .learning-path__tracks::before,
+  .learning-path__tracks::after {
+    display: none;
+  }
 }
 
 /* ===== Learning Path — Mobile ===== */
@@ -813,6 +951,11 @@
     gap: 14px;
   }
 
+  .learning-path__section-heading {
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+
   .learning-path__connector {
     width: 36px;
   }
@@ -834,10 +977,6 @@
     font-size: 14px;
   }
 
-  .learning-path__card-desc {
-    font-size: 12px;
-  }
-
   .learning-path__link {
     font-size: 12px;
     padding: 7px 0;
@@ -848,8 +987,21 @@
     font-size: 14px;
   }
 
-  .learning-path__achievement {
-    margin-left: 36px;
-    padding: 14px 16px;
+  .learning-path__fork {
+    font-size: 12px;
+    padding: 16px 0 4px;
+    margin: 8px 0 16px;
+  }
+
+  .learning-path__track-header {
+    padding: 16px 14px 12px;
+  }
+
+  .learning-path__track-stage {
+    padding: 12px 14px;
+  }
+
+  .learning-path__track-stage-title {
+    font-size: 13px;
   }
 }
