@@ -2,18 +2,18 @@
   "lastUpdated": "2026-02-09",
   "channels": [
     {
-      "title": "3Blue1Brown",
-      "host": "Grant Sanderson",
-      "channelId": "UCYO_jab_esuFRV4b17AJtAw",
-      "url": "https://www.youtube.com/@3blue1brown",
-      "description": "Beautiful visual explanations of mathematics, neural networks, and the concepts underlying modern AI.",
-      "subscribers": "6.6M",
-      "category": "educational",
-      "tags": ["math", "neural-networks", "visualization", "educational"],
+      "title": "Y Combinator",
+      "host": "Y Combinator",
+      "channelId": "UCxIJaCMEptJjxmmQgGFsnCg",
+      "url": "https://www.youtube.com/@ycombinator",
+      "description": "Startup advice, founder interviews, and deep dives into building technology companies from the world's top accelerator.",
+      "subscribers": "1.3M",
+      "category": "interviews",
+      "tags": ["startups", "ai", "founders", "technology"],
       "recentVideos": [
-        { "videoId": "BHdbsHFs2P0", "title": "The Hairy Ball Theorem", "publishedAt": "2026-01-31", "thumbnail": "https://i3.ytimg.com/vi/BHdbsHFs2P0/hqdefault.jpg" },
-        { "videoId": "t3jZ2xGOvYg", "title": "The ladybug clock puzzle", "publishedAt": "2026-01-16", "thumbnail": "https://i1.ytimg.com/vi/t3jZ2xGOvYg/hqdefault.jpg" },
-        { "videoId": "FE-hM1kRK4Y", "title": "Why Laplace transforms are so useful", "publishedAt": "2025-11-05", "thumbnail": "https://i3.ytimg.com/vi/FE-hM1kRK4Y/hqdefault.jpg" }
+        { "videoId": "OLEjyBLo8sQ", "title": "This Startup Beat Gemini 3 on ARC-AGI — at Half the Cost", "publishedAt": "2026-01-29", "thumbnail": "https://i4.ytimg.com/vi/OLEjyBLo8sQ/hqdefault.jpg" },
+        { "videoId": "M57MeOY-n3g", "title": "Artie: Real Time Data Streaming For The AI Age", "publishedAt": "2026-01-26", "thumbnail": "https://i2.ytimg.com/vi/M57MeOY-n3g/hqdefault.jpg" },
+        { "videoId": "s5w7pbpeGZ0", "title": "The Future of AI Molecular Discovery", "publishedAt": "2026-01-24", "thumbnail": "https://i4.ytimg.com/vi/s5w7pbpeGZ0/hqdefault.jpg" }
       ]
     },
     {
@@ -154,17 +154,6 @@
   ],
   "famousEpisodes": [
     {
-      "title": "But what is a neural network? | Deep learning chapter 1",
-      "channel": "3Blue1Brown",
-      "videoId": "aircAruvnKk",
-      "thumbnail": "https://i.ytimg.com/vi/aircAruvnKk/hqdefault.jpg",
-      "duration": "19:13",
-      "views": "18M",
-      "date": "2017-10-05",
-      "category": "educational",
-      "tags": ["neural-networks", "deep-learning", "visualization"]
-    },
-    {
       "title": "Let's Build GPT: from scratch, in code",
       "channel": "Andrej Karpathy",
       "videoId": "kCc8FmEb1nY",
@@ -218,17 +207,6 @@
       "date": "2022-08-17",
       "category": "technical",
       "tags": ["neural-networks", "backpropagation", "coding"]
-    },
-    {
-      "title": "Attention in transformers, visually explained | DL chapter 6",
-      "channel": "3Blue1Brown",
-      "videoId": "eMlx5fFNoYc",
-      "thumbnail": "https://i.ytimg.com/vi/eMlx5fFNoYc/hqdefault.jpg",
-      "duration": "27:14",
-      "views": "5.1M",
-      "date": "2024-04-07",
-      "category": "educational",
-      "tags": ["transformers", "attention", "visualization"]
     },
     {
       "title": "Dario Amodei: Anthropic, Claude, and the Future of AI Safety",
