@@ -83,7 +83,7 @@ export function renderPapers(items) {
   if (badge) badge.textContent = items.length || '';
 }
 
-export function renderPodcastsTab(channels, videosByChannel, famousEpisodes, rssLoading = false) {
+export function renderPodcastsTab(channels, videosByChannel, famousEpisodes) {
   // Render popular episodes (horizontal scroll, sorted by views)
   const popularContainer = document.getElementById('podcastsPopularRow');
   const popularCount = document.getElementById('popularEpisodesCount');
@@ -118,7 +118,7 @@ export function renderPodcastsTab(channels, videosByChannel, famousEpisodes, rss
       const frag = document.createDocumentFragment();
       channels.forEach(ch => {
         const videos = videosByChannel[ch.channelId] || [];
-        frag.appendChild(createPodcasterGroup(ch, videos, rssLoading));
+        frag.appendChild(createPodcasterGroup(ch, videos));
       });
       groupsContainer.appendChild(frag);
     }

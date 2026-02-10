@@ -15,7 +15,6 @@ let currentArchive = [];
 let resourcesData = null;
 let podcastsData = null;
 let podcastVideosByChannel = {};
-let podcastRssLoading = true;
 
 const ONE_YEAR_MS = 365 * 24 * 60 * 60 * 1000;
 
@@ -133,17 +132,37 @@ async function loadPodcasts() {
     const resp = await fetch('data/podcasts.json');
     podcastsData = await resp.json();
 
-    // Render immediately with loading skeletons for videos
-    podcastRssLoading = true;
+    // Build initial videosByChannel from pre-populated recentVideos (instant render)
+    podcastsData.channels.forEach(ch => {
+      if (ch.recentVideos?.length && !podcastVideosByChannel[ch.channelId]) {
+        podcastVideosByChannel[ch.channelId] = ch.recentVideos.map(v => ({
+          title: v.title,
+          url: `https://www.youtube.com/watch?v=${v.videoId}`,
+          videoId: v.videoId,
+          publishedAt: v.publishedAt,
+          thumbnail: v.thumbnail,
+        }));
+      }
+    });
+
     filterPodcasts();
 
-    // Fetch live RSS feeds in background, re-render when done
-    const { videosByChannel } = await fetchAllChannelVideos(podcastsData.channels);
-    podcastVideosByChannel = videosByChannel;
-    podcastRssLoading = false;
-    filterPodcasts();
+    // Fetch live RSS in background (deferred), silently update when done
+    const scheduleRss = window.requestIdleCallback || (cb => setTimeout(cb, 100));
+    scheduleRss(async () => {
+      try {
+        const { videosByChannel } = await fetchAllChannelVideos(podcastsData.channels);
+        let updated = false;
+        for (const [chId, videos] of Object.entries(videosByChannel)) {
+          if (videos.length > 0) {
+            podcastVideosByChannel[chId] = videos;
+            updated = true;
+          }
+        }
+        if (updated) filterPodcasts();
+      } catch { /* RSS failures are silent — pre-populated data handles it */ }
+    });
   } catch {
-    podcastRssLoading = false;
     showToast('Could not load podcasts', 'error');
   }
 }
@@ -195,7 +214,7 @@ function filterPodcasts() {
   }
   episodes = [...episodes].sort((a, b) => parseViewCount(b.views) - parseViewCount(a.views));
 
-  renderPodcastsTab(channels, podcastVideosByChannel, episodes, podcastRssLoading);
+  renderPodcastsTab(channels, podcastVideosByChannel, episodes);
 }
 
 const RESOURCE_TOPIC_TAGS = {

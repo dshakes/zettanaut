@@ -9,6 +9,7 @@
 - **News** — Aggregates AI stories from Hacker News, Dev.to, Reddit (r/MachineLearning, r/LocalLLaMA), and company blogs (Anthropic, OpenAI, Google AI, Meta AI, Microsoft AI, vLLM, Hugging Face, Lilian Weng)
 - **Releases** — Curated major product and model launches (Claude, GPT, Gemini, Llama, DeepSeek, etc.) plus trending HN release stories, filtered to exclude SDK noise
 - **Papers** — Latest research from ArXiv, Semantic Scholar, and HuggingFace Daily Papers with citation counts and PDF links
+- **Podcasts** — Curated directory of 10 top AI YouTube channels with pre-populated recent episodes (3 per channel), popular episodes horizontal carousel sorted by views, and live RSS feed updates every 4 hours. Channels include 3Blue1Brown, Lex Fridman, Fireship, Andrej Karpathy, Two Minute Papers, Matt Wolfe, AI Explained, Dwarkesh Podcast, DeepLearning.AI, and Moonshots with Peter Diamandis
 - **Resources** — Curated free and paid learning resources for beginners to advanced practitioners, filterable by cost and level
 - **AI Engineer** — Comprehensive 16-week multi-track learning path (100+ curated tutorials) with collapsible stages and dynamic trending resources (fetched live from HN + Dev.to, scored by popularity/relevance). Shared 4-week foundation, then fork into 3 specializations (6 stages each):
   - **Applied AI Scientist** — Deep learning architectures, NLP & transformers, LLMs & fine-tuning, agentic AI, computer vision & multimodal AI, reinforcement learning & RLHF
@@ -41,7 +42,8 @@ score = recency (35%) + engagement (35%) + authority (30%)
 - **Client-side fetch** — All data pulled directly in the browser
 - **LLM API integration** — OpenAI / Anthropic for AI Atlas concept search (API key stored locally)
 - **CORS proxy cascade** — Automatic fallback (allorigins → corsproxy.io) for blocked APIs
-- **localStorage caching** — TTL-based with LRU eviction (10min news, 15min releases, 30min papers, 24h concepts)
+- **Stale-while-revalidate** — Pre-populated podcast data renders instantly; live RSS updates silently in background via `requestIdleCallback`
+- **localStorage caching** — TTL-based with LRU eviction (10min news, 15min releases, 30min papers, 4h podcasts, 24h concepts)
 - **Auto-refresh** — Configurable intervals, pauses when tab is hidden (Visibility API)
 - **Material Design** — Google-style subtle colors, Roboto font, Material Icons
 
@@ -57,6 +59,7 @@ score = recency (35%) + engagement (35%) + authority (30%)
 | Semantic Scholar API | Papers | Fallback |
 | HuggingFace Daily Papers | Papers | Fallback |
 | Curated Releases JSON | Releases | No |
+| YouTube RSS Feeds | Podcasts | Yes |
 | OpenAI / Anthropic API | AI Atlas | No |
 
 ## Run Locally
@@ -86,6 +89,7 @@ zettanaut/
 │   └── services/           # Cache, CORS proxy, fetcher, scorer, scheduler, concept-search
 ├── data/
 │   ├── major-releases.json # Curated flagship releases
+│   ├── podcasts.json       # Channels, pre-populated videos, famous episodes
 │   └── learning-resources.json
 └── assets/
     └── favicon.svg

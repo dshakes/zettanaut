@@ -137,7 +137,7 @@ export function createResourceCard(resource) {
   return el;
 }
 
-export function createPodcasterGroup(channel, videos, loading = false) {
+export function createPodcasterGroup(channel, videos) {
   const el = document.createElement('div');
   el.dataset.category = channel.category;
 
@@ -146,26 +146,19 @@ export function createPodcasterGroup(channel, videos, loading = false) {
     : channel.description;
 
   const displayVideos = videos.slice(0, 3);
-  const showLoading = loading && displayVideos.length === 0;
-  el.className = `channel-group${!showLoading && displayVideos.length === 0 ? ' channel-group--no-videos' : ''}`;
+  el.className = `channel-group${displayVideos.length === 0 ? ' channel-group--no-videos' : ''}`;
 
   const videosHTML = displayVideos.length ? `<div class="channel-group__videos">
       ${displayVideos.map(v => `
         <a href="${escapeAttr(v.url)}" target="_blank" rel="noopener" class="channel-group__video">
           <div class="channel-group__video-img">
-            <img src="${escapeAttr(v.thumbnail)}" alt="" loading="lazy">
+            <img src="${escapeAttr(v.thumbnail)}" alt="" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${escapeAttr(v.videoId)}/mqdefault.jpg'">
             <span class="channel-group__video-play material-icons-outlined">play_circle_filled</span>
           </div>
           <span class="channel-group__video-title">${escapeHTML(v.title)}</span>
           <span class="channel-group__video-date">${formatVideoDate(v.publishedAt)}</span>
         </a>
       `).join('')}
-    </div>` : showLoading ? `<div class="channel-group__videos channel-group__videos--loading">
-      ${[0,1,2].map(() => `<div class="channel-group__video-skeleton">
-          <div class="channel-group__video-img skeleton-pulse"></div>
-          <div class="skeleton-line skeleton-pulse"></div>
-          <div class="skeleton-line skeleton-line--short skeleton-pulse"></div>
-        </div>`).join('')}
     </div>` : '';
 
   el.innerHTML = `
@@ -195,7 +188,7 @@ export function createPopularEpisodeCard(episode) {
 
   el.innerHTML = `
     <div class="popular-episode__img">
-      <img src="${escapeAttr(episode.thumbnail)}" alt="" loading="lazy">
+      <img src="${escapeAttr(episode.thumbnail)}" alt="" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${escapeAttr(episode.videoId)}/mqdefault.jpg'">
       <span class="popular-episode__play material-icons-outlined">play_circle_filled</span>
       <span class="popular-episode__duration">${escapeHTML(episode.duration)}</span>
     </div>

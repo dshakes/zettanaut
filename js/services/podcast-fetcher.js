@@ -4,6 +4,7 @@ import { cache } from './cache.js';
 const CACHE_TTL = 4 * 60 * 60 * 1000; // 4 hours
 const YT_FEED_URL = 'https://www.youtube.com/feeds/videos.xml?channel_id=';
 const MAX_VIDEOS = 3;
+const FETCH_TIMEOUT = 6000; // 6s — fast fail, pre-populated data covers us
 
 function parseEntry(entry) {
   const videoId = entry.querySelector('videoId')?.textContent
@@ -16,7 +17,6 @@ function parseEntry(entry) {
     publishedAt: entry.querySelector('published')?.textContent || '',
     thumbnail: entry.querySelector('group thumbnail')?.getAttribute('url')
       || `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
-    description: entry.querySelector('group description')?.textContent || '',
   };
 }
 
@@ -24,11 +24,13 @@ async function fetchChannelVideos(channelId) {
   const cached = cache.get(`podcast-yt:${channelId}`);
   if (cached) return cached;
 
-  const doc = await fetchXML(`${YT_FEED_URL}${channelId}`, { useProxy: true, timeout: 10000 });
+  const doc = await fetchXML(`${YT_FEED_URL}${channelId}`, { useProxy: true, timeout: FETCH_TIMEOUT });
   const entries = Array.from(doc.querySelectorAll('entry')).slice(0, MAX_VIDEOS);
   const videos = entries.map(parseEntry);
 
-  cache.set(`podcast-yt:${channelId}`, videos, CACHE_TTL);
+  if (videos.length > 0) {
+    cache.set(`podcast-yt:${channelId}`, videos, CACHE_TTL);
+  }
   return videos;
 }
 
@@ -42,10 +44,9 @@ export async function fetchAllChannelVideos(channels) {
 
   results.forEach((result, i) => {
     const channelId = channels[i].channelId;
-    if (result.status === 'fulfilled') {
+    if (result.status === 'fulfilled' && result.value.length > 0) {
       videosByChannel[channelId] = result.value;
     } else {
-      videosByChannel[channelId] = [];
       errorCount++;
     }
   });
