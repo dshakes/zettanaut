@@ -3,7 +3,7 @@ import { cache } from './cache.js';
 
 const CACHE_TTL = 4 * 60 * 60 * 1000; // 4 hours
 const YT_FEED_URL = 'https://www.youtube.com/feeds/videos.xml?channel_id=';
-const MAX_VIDEOS = 5;
+const MAX_VIDEOS = 3;
 
 function parseEntry(entry) {
   const videoId = entry.querySelector('videoId')?.textContent
@@ -15,7 +15,7 @@ function parseEntry(entry) {
     videoId,
     publishedAt: entry.querySelector('published')?.textContent || '',
     thumbnail: entry.querySelector('group thumbnail')?.getAttribute('url')
-      || `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`,
+      || `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
     description: entry.querySelector('group description')?.textContent || '',
   };
 }

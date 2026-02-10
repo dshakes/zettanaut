@@ -550,6 +550,38 @@
   grid-template-columns: 1fr;
 }
 
+/* Skeleton loading for channel videos */
+.channel-group__video-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skeleton-pulse {
+  background: linear-gradient(90deg, var(--md-grey-100) 25%, var(--md-grey-200) 50%, var(--md-grey-100) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite ease-in-out;
+  border-radius: var(--radius-sm);
+}
+
+.channel-group__video-skeleton .channel-group__video-img {
+  aspect-ratio: 16 / 9;
+}
+
+.skeleton-line {
+  height: 10px;
+  width: 90%;
+}
+
+.skeleton-line--short {
+  width: 50%;
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
 /* ===== Podcast Mobile Overrides ===== */
 @media (max-width: 600px) {
   .popular-episode {

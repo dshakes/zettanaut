@@ -137,7 +137,7 @@ export function createResourceCard(resource) {
   return el;
 }
 
-export function createPodcasterGroup(channel, videos, fallbackVideos = []) {
+export function createPodcasterGroup(channel, videos, loading = false) {
   const el = document.createElement('div');
   el.dataset.category = channel.category;
 
@@ -145,8 +145,28 @@ export function createPodcasterGroup(channel, videos, fallbackVideos = []) {
     ? channel.description.slice(0, 120) + '...'
     : channel.description;
 
-  const displayVideos = (videos.length > 0 ? videos : fallbackVideos).slice(0, 3);
-  el.className = `channel-group${displayVideos.length === 0 ? ' channel-group--no-videos' : ''}`;
+  const displayVideos = videos.slice(0, 3);
+  const showLoading = loading && displayVideos.length === 0;
+  el.className = `channel-group${!showLoading && displayVideos.length === 0 ? ' channel-group--no-videos' : ''}`;
+
+  const videosHTML = displayVideos.length ? `<div class="channel-group__videos">
+      ${displayVideos.map(v => `
+        <a href="${escapeAttr(v.url)}" target="_blank" rel="noopener" class="channel-group__video">
+          <div class="channel-group__video-img">
+            <img src="${escapeAttr(v.thumbnail)}" alt="" loading="lazy">
+            <span class="channel-group__video-play material-icons-outlined">play_circle_filled</span>
+          </div>
+          <span class="channel-group__video-title">${escapeHTML(v.title)}</span>
+          <span class="channel-group__video-date">${formatVideoDate(v.publishedAt)}</span>
+        </a>
+      `).join('')}
+    </div>` : showLoading ? `<div class="channel-group__videos channel-group__videos--loading">
+      ${[0,1,2].map(() => `<div class="channel-group__video-skeleton">
+          <div class="channel-group__video-img skeleton-pulse"></div>
+          <div class="skeleton-line skeleton-pulse"></div>
+          <div class="skeleton-line skeleton-line--short skeleton-pulse"></div>
+        </div>`).join('')}
+    </div>` : '';
 
   el.innerHTML = `
     <div class="channel-group__info">
@@ -159,18 +179,7 @@ export function createPodcasterGroup(channel, videos, fallbackVideos = []) {
       <p class="channel-group__desc">${escapeHTML(desc)}</p>
       <a href="${escapeAttr(channel.url)}" target="_blank" rel="noopener" class="channel-group__link">View Channel <span class="material-icons-outlined">arrow_forward</span></a>
     </div>
-    ${displayVideos.length ? `<div class="channel-group__videos">
-      ${displayVideos.map(v => `
-        <a href="${escapeAttr(v.url)}" target="_blank" rel="noopener" class="channel-group__video">
-          <div class="channel-group__video-img">
-            <img src="${escapeAttr(v.thumbnail)}" alt="" loading="lazy">
-            <span class="channel-group__video-play material-icons-outlined">play_circle_filled</span>
-          </div>
-          <span class="channel-group__video-title">${escapeHTML(v.title)}</span>
-          <span class="channel-group__video-date">${formatVideoDate(v.publishedAt)}</span>
-        </a>
-      `).join('')}
-    </div>` : ''}
+    ${videosHTML}
   `;
 
   return el;

@@ -15,6 +15,7 @@ let currentArchive = [];
 let resourcesData = null;
 let podcastsData = null;
 let podcastVideosByChannel = {};
+let podcastRssLoading = true;
 
 const ONE_YEAR_MS = 365 * 24 * 60 * 60 * 1000;
 
@@ -132,16 +133,17 @@ async function loadPodcasts() {
     const resp = await fetch('data/podcasts.json');
     podcastsData = await resp.json();
 
-    // Render immediately using famous episodes as video fallbacks
+    // Render immediately with loading skeletons for videos
+    podcastRssLoading = true;
     filterPodcasts();
 
     // Fetch live RSS feeds in background, re-render when done
-    const { videosByChannel, errorCount } = await fetchAllChannelVideos(podcastsData.channels);
+    const { videosByChannel } = await fetchAllChannelVideos(podcastsData.channels);
     podcastVideosByChannel = videosByChannel;
+    podcastRssLoading = false;
     filterPodcasts();
-
-    // RSS errors are silent — famous episode fallbacks handle it gracefully
   } catch {
+    podcastRssLoading = false;
     showToast('Could not load podcasts', 'error');
   }
 }
@@ -193,20 +195,7 @@ function filterPodcasts() {
   }
   episodes = [...episodes].sort((a, b) => parseViewCount(b.views) - parseViewCount(a.views));
 
-  // Build fallback video map from famous episodes (keyed by channel title)
-  const episodesByChannel = {};
-  podcastsData.famousEpisodes.forEach(ep => {
-    if (!episodesByChannel[ep.channel]) episodesByChannel[ep.channel] = [];
-    episodesByChannel[ep.channel].push({
-      title: ep.title,
-      url: `https://www.youtube.com/watch?v=${ep.videoId}`,
-      videoId: ep.videoId,
-      publishedAt: ep.date,
-      thumbnail: ep.thumbnail,
-    });
-  });
-
-  renderPodcastsTab(channels, podcastVideosByChannel, episodes, episodesByChannel);
+  renderPodcastsTab(channels, podcastVideosByChannel, episodes, podcastRssLoading);
 }
 
 const RESOURCE_TOPIC_TAGS = {
