@@ -384,40 +384,49 @@
 }
 
 /* ===== Channel Group (Podcaster Card) ===== */
-.channel-group {
+/* Podcasters 2-column grid container */
+#podcastsChannelGroups {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+
+/* Individual channel card — compact vertical stack */
+.channel-group {
   background: var(--md-surface);
   border-radius: var(--radius-md);
   box-shadow: var(--elevation-1);
-  padding: 20px;
-  margin-bottom: 12px;
+  padding: 14px;
   transition: box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .channel-group:hover {
   box-shadow: var(--elevation-2);
 }
 
-.channel-group__info {
+/* Header: category badge + title + meta inline */
+.channel-group__header {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
-.channel-group__name-row {
+.channel-group__title-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: wrap;
 }
 
 .channel-group__category {
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 600;
   text-transform: uppercase;
-  padding: 3px 8px;
+  padding: 2px 7px;
   border-radius: var(--radius-full);
   letter-spacing: 0.5px;
   flex-shrink: 0;
@@ -430,67 +439,62 @@
 
 .channel-group__name {
   font-family: var(--font-display);
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 600;
   color: var(--md-grey-900);
+  line-height: 1.2;
 }
 
-.channel-group__host,
-.channel-group__subs {
-  font-size: 12px;
-  color: var(--md-grey-500);
+.channel-group__name a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.channel-group__name a:hover {
+  color: var(--md-primary-600);
+}
+
+/* Inline meta row: host + subscribers */
+.channel-group__meta {
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 12px;
+  font-size: 11px;
+  color: var(--md-grey-500);
 }
 
-.channel-group__host .material-icons-outlined,
-.channel-group__subs .material-icons-outlined {
-  font-size: 14px;
+.channel-group__meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.channel-group__meta .material-icons-outlined {
+  font-size: 13px;
 }
 
 .channel-group__desc {
-  font-size: 13px;
-  color: var(--md-grey-700);
-  line-height: 1.5;
+  font-size: 12px;
+  color: var(--md-grey-600);
+  line-height: 1.4;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  margin: 0;
 }
 
-.channel-group__link {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--md-primary-600);
-  text-decoration: none;
-  margin-top: auto;
-  transition: color 0.15s ease;
-}
-
-.channel-group__link:hover {
-  color: var(--md-primary-800);
-}
-
-.channel-group__link .material-icons-outlined {
-  font-size: 16px;
-}
-
-/* Channel group videos (right column) */
+/* 3 video thumbnails in a row */
 .channel-group__videos {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  align-content: start;
+  gap: 8px;
 }
 
 .channel-group__video {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
   text-decoration: none;
   color: var(--md-grey-900);
   transition: transform 0.15s ease;
@@ -520,11 +524,11 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 28px;
+  font-size: 24px;
   color: rgba(255, 255, 255, 0.9);
   opacity: 0;
   transition: opacity 0.2s ease;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 }
 
 .channel-group__video:hover .channel-group__video-play {
@@ -532,7 +536,7 @@
 }
 
 .channel-group__video-title {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 500;
   line-height: 1.3;
   display: -webkit-box;
@@ -541,15 +545,9 @@
   overflow: hidden;
 }
 
-.channel-group__video-date {
-  font-size: 10px;
-  color: var(--md-grey-500);
-}
-
 .channel-group--no-videos {
-  grid-template-columns: 1fr;
+  /* no special rules needed — card just won't have video section */
 }
-
 
 /* ===== Podcast Mobile Overrides ===== */
 @media (max-width: 600px) {
@@ -566,21 +564,17 @@
     padding: 10px 12px;
   }
 
-  .channel-group {
+  #podcastsChannelGroups {
     grid-template-columns: 1fr;
-    gap: 12px;
-    padding: 16px;
+    gap: 10px;
   }
 
-  .channel-group__name {
-    font-size: 15px;
+  .channel-group {
+    padding: 12px;
   }
 
   .channel-group__videos {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    gap: 6px;
   }
 
   .podcasts-section-heading {
@@ -590,6 +584,25 @@
 
   .podcasts-section-heading--channels {
     margin-top: 24px;
+  }
+}
+
+/* Tablet: 2 columns still fits */
+@media (min-width: 601px) and (max-width: 900px) {
+  #podcastsChannelGroups {
+    gap: 10px;
+  }
+
+  .channel-group {
+    padding: 12px;
+  }
+
+  .channel-group__name {
+    font-size: 13px;
+  }
+
+  .channel-group__desc {
+    -webkit-line-clamp: 1;
   }
 }
 

@@ -141,14 +141,26 @@ export function createPodcasterGroup(channel, videos) {
   const el = document.createElement('div');
   el.dataset.category = channel.category;
 
-  const desc = channel.description.length > 120
-    ? channel.description.slice(0, 120) + '...'
+  const desc = channel.description.length > 100
+    ? channel.description.slice(0, 100) + '...'
     : channel.description;
 
   const displayVideos = videos.slice(0, 3);
   el.className = `channel-group${displayVideos.length === 0 ? ' channel-group--no-videos' : ''}`;
 
-  const videosHTML = displayVideos.length ? `<div class="channel-group__videos">
+  el.innerHTML = `
+    <div class="channel-group__header">
+      <div class="channel-group__title-row">
+        <span class="channel-group__category channel-group__category--${channel.category}">${escapeHTML(channel.category)}</span>
+        <h3 class="channel-group__name"><a href="${escapeAttr(channel.url)}" target="_blank" rel="noopener">${escapeHTML(channel.title)}</a></h3>
+      </div>
+      <div class="channel-group__meta">
+        <span><span class="material-icons-outlined">person</span>${escapeHTML(channel.host)}</span>
+        <span><span class="material-icons-outlined">group</span>${escapeHTML(channel.subscribers)}</span>
+      </div>
+      <p class="channel-group__desc">${escapeHTML(desc)}</p>
+    </div>
+    ${displayVideos.length ? `<div class="channel-group__videos">
       ${displayVideos.map(v => `
         <a href="${escapeAttr(v.url)}" target="_blank" rel="noopener" class="channel-group__video">
           <div class="channel-group__video-img">
@@ -156,23 +168,9 @@ export function createPodcasterGroup(channel, videos) {
             <span class="channel-group__video-play material-icons-outlined">play_circle_filled</span>
           </div>
           <span class="channel-group__video-title">${escapeHTML(v.title)}</span>
-          <span class="channel-group__video-date">${formatVideoDate(v.publishedAt)}</span>
         </a>
       `).join('')}
-    </div>` : '';
-
-  el.innerHTML = `
-    <div class="channel-group__info">
-      <div class="channel-group__name-row">
-        <span class="channel-group__category channel-group__category--${channel.category}">${escapeHTML(channel.category)}</span>
-        <h3 class="channel-group__name">${escapeHTML(channel.title)}</h3>
-      </div>
-      <span class="channel-group__host"><span class="material-icons-outlined">person</span>${escapeHTML(channel.host)}</span>
-      <span class="channel-group__subs"><span class="material-icons-outlined">group</span>${escapeHTML(channel.subscribers)}</span>
-      <p class="channel-group__desc">${escapeHTML(desc)}</p>
-      <a href="${escapeAttr(channel.url)}" target="_blank" rel="noopener" class="channel-group__link">View Channel <span class="material-icons-outlined">arrow_forward</span></a>
-    </div>
-    ${videosHTML}
+    </div>` : ''}
   `;
 
   return el;
