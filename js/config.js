@@ -4,6 +4,7 @@ export const CONFIG = {
     papers: 30 * 60 * 1000,
     releases: 5 * 60 * 1000,
     resources: 24 * 60 * 60 * 1000,
+    podcasts: 4 * 60 * 60 * 1000,
   },
   REFRESH_INTERVALS: {
     news: 10 * 60 * 1000,

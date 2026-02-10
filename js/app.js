@@ -1,8 +1,9 @@
 import { initTabs } from './ui/tabs.js';
-import { showLoader, hideLoader } from './ui/loader.js';
-import { renderNews, renderReleases, renderPapers, renderResources, renderPodcasts, renderArchive, renderHighlights, buildSourceFilters } from './ui/renderer.js';
+import { showLoader, hideLoader, showPodcastLoader } from './ui/loader.js';
+import { renderNews, renderReleases, renderPapers, renderResources, renderPodcastsTab, renderArchive, renderHighlights, buildSourceFilters } from './ui/renderer.js';
 import { showToast } from './ui/toast.js';
 import { fetchAllNews, fetchAllReleases, fetchAllPapers } from './services/aggregator.js';
+import { fetchAllChannelVideos } from './services/podcast-fetcher.js';
 import { startScheduler } from './services/scheduler.js';
 import { cache } from './services/cache.js';
 import { CONFIG } from './config.js';
@@ -13,6 +14,7 @@ let currentPapers = [];
 let currentArchive = [];
 let resourcesData = null;
 let podcastsData = null;
+let podcastVideosByChannel = {};
 
 const ONE_YEAR_MS = 365 * 24 * 60 * 60 * 1000;
 
@@ -37,7 +39,6 @@ const filters = {
   resourceLevel: 'all',
   resourceTopic: 'all',
   podcastTopic: 'all',
-  podcastSort: 'popularity',
 };
 
 function sortItems(items, sortBy) {
@@ -128,50 +129,55 @@ async function loadResources() {
 
 async function loadPodcasts() {
   try {
+    showPodcastLoader('podcastsTopSection');
     const resp = await fetch('data/podcasts.json');
     podcastsData = await resp.json();
+
+    // Fetch RSS feeds in parallel
+    const { videosByChannel, errorCount } = await fetchAllChannelVideos(podcastsData.channels);
+    podcastVideosByChannel = videosByChannel;
+
     filterPodcasts();
+    if (errorCount) showToast(`${errorCount} podcast feed(s) unavailable`, 'error');
   } catch {
     showToast('Could not load podcasts', 'error');
   }
 }
 
-function parseSubscribers(str) {
-  if (!str) return 0;
-  const num = parseFloat(str);
-  if (str.includes('M')) return num * 1_000_000;
-  if (str.includes('K')) return num * 1_000;
-  return num;
-}
-
 function filterPodcasts() {
   if (!podcastsData) return;
-  let items = podcastsData.podcasts;
 
-  // Topic filter
-  if (filters.podcastTopic !== 'all') {
-    items = items.filter(p => p.category === filters.podcastTopic);
-  }
-
-  // Search filter
   const q = document.getElementById('podcastsSearch')?.value?.toLowerCase();
+  const topic = filters.podcastTopic;
+
+  // Filter channels
+  let channels = podcastsData.channels;
+  if (topic !== 'all') {
+    channels = channels.filter(ch => ch.category === topic);
+  }
   if (q) {
-    items = items.filter(p =>
-      p.title.toLowerCase().includes(q) ||
-      p.host.toLowerCase().includes(q) ||
-      p.description.toLowerCase().includes(q) ||
-      p.tags?.some(t => t.toLowerCase().includes(q))
+    channels = channels.filter(ch =>
+      ch.title.toLowerCase().includes(q) ||
+      ch.host.toLowerCase().includes(q) ||
+      ch.description.toLowerCase().includes(q) ||
+      ch.tags?.some(t => t.toLowerCase().includes(q))
     );
   }
 
-  // Sort
-  if (filters.podcastSort === 'az') {
-    items = [...items].sort((a, b) => a.title.localeCompare(b.title));
-  } else {
-    items = [...items].sort((a, b) => parseSubscribers(b.subscribers) - parseSubscribers(a.subscribers));
+  // Filter famous episodes
+  let episodes = podcastsData.famousEpisodes;
+  if (topic !== 'all') {
+    episodes = episodes.filter(ep => ep.category === topic);
+  }
+  if (q) {
+    episodes = episodes.filter(ep =>
+      ep.title.toLowerCase().includes(q) ||
+      ep.channel.toLowerCase().includes(q) ||
+      ep.tags?.some(t => t.toLowerCase().includes(q))
+    );
   }
 
-  renderPodcasts(items);
+  renderPodcastsTab(channels, podcastVideosByChannel, episodes);
 }
 
 const RESOURCE_TOPIC_TAGS = {
@@ -307,15 +313,8 @@ function setupEventListeners() {
   setupTopicFilterListeners('newsTopicFilters', 'news', 'newsTopic');
   setupTopicFilterListeners('releasesTopicFilters', 'releases', 'releasesTopic');
 
-  // Podcast search, sort, topic filters
+  // Podcast search + topic filters
   setupSearchListeners('podcastsSearch', 'podcasts');
-  const podcastsSortEl = document.getElementById('podcastsSort');
-  if (podcastsSortEl) {
-    podcastsSortEl.addEventListener('change', () => {
-      filters.podcastSort = podcastsSortEl.value;
-      filterPodcasts();
-    });
-  }
   setupTopicFilterListeners('podcastsTopicFilters', 'podcasts', 'podcastTopic');
 
   // Resource topic filters

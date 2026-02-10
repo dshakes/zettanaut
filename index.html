@@ -213,19 +213,12 @@
     <section class="panel" id="panel-podcasts">
       <div class="panel-brief">
         <span class="material-icons-outlined">podcasts</span>
-        <p>Top AI and ML video podcasts and YouTube channels — curated picks for staying current with interviews, news, and technical deep-dives.</p>
+        <p>Top AI podcasters with recent videos, plus famous must-watch episodes — your complete AI video podcast hub.</p>
       </div>
       <div class="panel-toolbar">
         <div class="search-bar">
           <span class="material-icons-outlined">search</span>
-          <input type="text" class="search-input" id="podcastsSearch" placeholder="Search podcasts..." autocomplete="off">
-        </div>
-        <div class="sort-control">
-          <span class="material-icons-outlined">sort</span>
-          <select id="podcastsSort" class="sort-select">
-            <option value="popularity" selected>Popularity</option>
-            <option value="az">A–Z</option>
-          </select>
+          <input type="text" class="search-input" id="podcastsSearch" placeholder="Search podcasts & episodes..." autocomplete="off">
         </div>
       </div>
       <div class="topic-filters" id="podcastsTopicFilters">
@@ -236,7 +229,18 @@
         <button class="filter-chip" data-topic="technical">Technical</button>
         <button class="filter-chip" data-topic="educational">Educational</button>
       </div>
-      <div class="card-grid resources-grid" id="podcastsGrid"></div>
+
+      <h2 class="podcasts-section-heading">
+        <span class="material-icons-outlined">podcasts</span>
+        Top AI Podcasters
+      </h2>
+      <div id="podcastsTopSection"></div>
+
+      <h2 class="podcasts-section-heading podcasts-section-heading--famous">
+        <span class="material-icons-outlined">star</span>
+        Famous AI Podcast Episodes
+      </h2>
+      <div class="famous-episodes-grid" id="podcastsFamousGrid"></div>
     </section>
 
     <!-- AI Engineer Panel -->

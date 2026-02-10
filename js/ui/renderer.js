@@ -1,4 +1,4 @@
-import { createNewsCard, createPaperCard, createReleaseCard, createResourceCard, createPodcastCard, timeAgo } from './cards.js';
+import { createNewsCard, createPaperCard, createReleaseCard, createResourceCard, createPodcasterSection, createFamousEpisodeCard, timeAgo } from './cards.js';
 
 const PAGE_SIZE = 10;
 
@@ -83,8 +83,43 @@ export function renderPapers(items) {
   if (badge) badge.textContent = items.length || '';
 }
 
-export function renderPodcasts(items) {
-  renderGrid('podcastsGrid', items, createPodcastCard);
+export function renderPodcastsTab(channels, videosByChannel, famousEpisodes) {
+  // Render top podcasters
+  const topContainer = document.getElementById('podcastsTopSection');
+  if (topContainer) {
+    topContainer.innerHTML = '';
+    const frag = document.createDocumentFragment();
+    channels.forEach(ch => {
+      const videos = videosByChannel[ch.channelId] || [];
+      frag.appendChild(createPodcasterSection(ch, videos));
+    });
+    if (channels.length === 0) {
+      topContainer.innerHTML = `
+        <div class="empty-state">
+          <span class="material-icons-outlined">cloud_off</span>
+          <h3>No podcasters match your filters</h3>
+        </div>`;
+    } else {
+      topContainer.appendChild(frag);
+    }
+  }
+
+  // Render famous episodes
+  const famousContainer = document.getElementById('podcastsFamousGrid');
+  if (famousContainer) {
+    famousContainer.innerHTML = '';
+    const frag = document.createDocumentFragment();
+    famousEpisodes.forEach(ep => frag.appendChild(createFamousEpisodeCard(ep)));
+    if (famousEpisodes.length === 0) {
+      famousContainer.innerHTML = `
+        <div class="empty-state">
+          <span class="material-icons-outlined">cloud_off</span>
+          <h3>No episodes match your filters</h3>
+        </div>`;
+    } else {
+      famousContainer.appendChild(frag);
+    }
+  }
 }
 
 export function renderResources(categories) {

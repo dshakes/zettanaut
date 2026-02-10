@@ -137,27 +137,80 @@ export function createResourceCard(resource) {
   return el;
 }
 
-export function createPodcastCard(podcast) {
-  const el = document.createElement('article');
-  el.className = 'podcast-card';
-  el.dataset.category = podcast.category;
+export function createPodcasterSection(channel, videos) {
+  const el = document.createElement('div');
+  el.className = 'podcaster-section';
+  el.dataset.category = channel.category;
 
-  const tags = (podcast.tags || []).slice(0, 4);
+  const tags = (channel.tags || []).slice(0, 4);
 
   el.innerHTML = `
-    <div class="podcast-card__header">
-      <span class="podcast-card__category podcast-card__category--${podcast.category}">${escapeHTML(podcast.category)}</span>
-      <span class="podcast-card__frequency"><span class="material-icons-outlined">schedule</span>${escapeHTML(podcast.frequency)}</span>
+    <div class="podcaster-section__header">
+      <div class="podcaster-section__info">
+        <span class="podcaster-section__category podcaster-section__category--${channel.category}">${escapeHTML(channel.category)}</span>
+        <h3 class="podcaster-section__title"><a href="${escapeAttr(channel.url)}" target="_blank" rel="noopener">${escapeHTML(channel.title)}</a></h3>
+        <span class="podcaster-section__host"><span class="material-icons-outlined">person</span>${escapeHTML(channel.host)}</span>
+        <span class="podcaster-section__subs"><span class="material-icons-outlined">group</span>${escapeHTML(channel.subscribers)}</span>
+      </div>
+      <span class="podcaster-section__toggle material-icons-outlined">expand_more</span>
     </div>
-    <h3 class="podcast-card__title"><a href="${escapeAttr(podcast.url)}" target="_blank" rel="noopener">${escapeHTML(podcast.title)}</a></h3>
-    <span class="podcast-card__host"><span class="material-icons-outlined">person</span>${escapeHTML(podcast.host)}</span>
-    <p class="podcast-card__description">${escapeHTML(podcast.description)}</p>
-    <div class="podcast-card__meta">
-      <span class="podcast-card__subscribers"><span class="material-icons-outlined">group</span>${escapeHTML(podcast.subscribers)} subscribers</span>
+    <div class="podcaster-section__body">
+      <p class="podcaster-section__desc">${escapeHTML(channel.description)}</p>
+      ${tags.length ? `<div class="podcaster-section__tags">${tags.map(t => `<span class="podcaster-section__tag">${escapeHTML(t)}</span>`).join('')}</div>` : ''}
+      <div class="podcaster-section__videos">
+        ${videos.length ? videos.map(v => `
+          <a href="${escapeAttr(v.url)}" target="_blank" rel="noopener" class="video-thumb">
+            <div class="video-thumb__img-wrap">
+              <img src="${escapeAttr(v.thumbnail)}" alt="" loading="lazy">
+              <span class="video-thumb__play material-icons-outlined">play_circle_filled</span>
+            </div>
+            <span class="video-thumb__title">${escapeHTML(v.title)}</span>
+            <span class="video-thumb__date">${formatVideoDate(v.publishedAt)}</span>
+          </a>
+        `).join('') : '<span class="podcaster-section__no-videos">Could not load recent videos</span>'}
+      </div>
     </div>
-    ${tags.length ? `<div class="podcast-card__tags">${tags.map(t => `<span class="podcast-card__tag">${escapeHTML(t)}</span>`).join('')}</div>` : ''}
+  `;
+
+  // Toggle expand/collapse
+  const header = el.querySelector('.podcaster-section__header');
+  header.addEventListener('click', () => {
+    el.classList.toggle('is-expanded');
+  });
+
+  return el;
+}
+
+export function createFamousEpisodeCard(episode) {
+  const el = document.createElement('a');
+  el.className = 'famous-episode';
+  el.href = `https://www.youtube.com/watch?v=${escapeAttr(episode.videoId)}`;
+  el.target = '_blank';
+  el.rel = 'noopener';
+  el.dataset.category = episode.category;
+
+  el.innerHTML = `
+    <div class="famous-episode__img-wrap">
+      <img src="${escapeAttr(episode.thumbnail)}" alt="" loading="lazy">
+      <span class="famous-episode__play material-icons-outlined">play_circle_filled</span>
+      <span class="famous-episode__duration">${escapeHTML(episode.duration)}</span>
+    </div>
+    <div class="famous-episode__details">
+      <h4 class="famous-episode__title">${escapeHTML(episode.title)}</h4>
+      <span class="famous-episode__channel">${escapeHTML(episode.channel)}</span>
+      <div class="famous-episode__meta">
+        <span><span class="material-icons-outlined">visibility</span>${escapeHTML(episode.views)}</span>
+        <span><span class="material-icons-outlined">schedule</span>${escapeHTML(episode.date)}</span>
+      </div>
+    </div>
   `;
   return el;
+}
+
+function formatVideoDate(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
 function escapeHTML(str) {

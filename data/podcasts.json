@@ -1,235 +1,283 @@
 {
   "lastUpdated": "2026-02-09",
-  "podcasts": [
+  "channels": [
     {
       "title": "Lex Fridman Podcast",
       "host": "Lex Fridman",
+      "channelId": "UCSHZKyawb77ixDdsGog4iWA",
       "url": "https://www.youtube.com/@lexfridman",
       "description": "Long-form interviews with AI researchers, scientists, and tech leaders exploring intelligence, consciousness, and the future.",
       "subscribers": "4.9M",
-      "frequency": "weekly",
       "category": "interviews",
       "tags": ["ai", "agi", "research", "philosophy"]
     },
     {
       "title": "Dwarkesh Podcast",
       "host": "Dwarkesh Patel",
+      "channelId": "UC7D862xSGkforaMsEp7lFKg",
       "url": "https://www.youtube.com/@DwarkeshPatel",
       "description": "Deep-dive interviews with top AI researchers and technologists on the future of intelligence and civilization.",
       "subscribers": "420K",
-      "frequency": "weekly",
       "category": "interviews",
       "tags": ["ai", "agi", "research", "policy"]
     },
     {
-      "title": "Fireship",
-      "host": "Jeff Delaney",
-      "url": "https://www.youtube.com/@Fireship",
-      "description": "Fast-paced tech news and tutorials. Known for '100 seconds' explainers and weekly AI news roundups.",
-      "subscribers": "3.4M",
-      "frequency": "multiple per week",
-      "category": "news",
-      "tags": ["ai", "webdev", "news", "tutorials"]
-    },
-    {
-      "title": "Two Minute Papers",
-      "host": "K\u00e1roly Zsolnai-Feh\u00e9r",
-      "url": "https://www.youtube.com/@TwoMinutePapers",
-      "description": "Bite-sized breakdowns of cutting-edge AI research papers with visual demos and clear explanations.",
-      "subscribers": "1.6M",
-      "frequency": "multiple per week",
-      "category": "technical",
-      "tags": ["research", "papers", "computer-vision", "ml"]
-    },
-    {
       "title": "Andrej Karpathy",
       "host": "Andrej Karpathy",
+      "channelId": "UCXUPKJO5MZQN11PqgIvyuvQ",
       "url": "https://www.youtube.com/@AndrejKarpathy",
       "description": "In-depth technical lectures on neural networks, LLMs, and building AI systems from a former OpenAI/Tesla AI lead.",
       "subscribers": "980K",
-      "frequency": "monthly",
       "category": "technical",
       "tags": ["deep-learning", "llm", "neural-networks", "tutorials"]
     },
     {
-      "title": "All-In Podcast",
-      "host": "Chamath, Jason, Sacks, Friedberg",
-      "url": "https://www.youtube.com/@alaborofdavid",
-      "description": "Four tech investors discuss AI, startups, economics, and politics with insider perspectives on Silicon Valley.",
-      "subscribers": "2.1M",
-      "frequency": "weekly",
-      "category": "news",
-      "tags": ["ai", "investing", "startups", "policy"]
-    },
-    {
-      "title": "Matt Wolfe",
-      "host": "Matt Wolfe",
-      "url": "https://www.youtube.com/@maboroshi",
-      "description": "Weekly AI news roundups, tool reviews, and tutorials covering the latest in generative AI and practical applications.",
-      "subscribers": "870K",
-      "frequency": "multiple per week",
-      "category": "news",
-      "tags": ["ai-tools", "generative-ai", "news", "tutorials"]
-    },
-    {
-      "title": "Matthew Berman",
-      "host": "Matthew Berman",
-      "url": "https://www.youtube.com/@matthew_berman",
-      "description": "AI news, model reviews, and hands-on demos of the latest LLMs, open-source models, and AI tools.",
-      "subscribers": "640K",
-      "frequency": "multiple per week",
-      "category": "news",
-      "tags": ["llm", "open-source", "model-reviews", "news"]
-    },
-    {
-      "title": "DeepLearning.AI",
-      "host": "Andrew Ng",
-      "url": "https://www.youtube.com/@Deeplearningai",
-      "description": "Educational content from Andrew Ng's team — short courses, event talks, and AI explainers for practitioners.",
-      "subscribers": "380K",
-      "frequency": "multiple per week",
-      "category": "educational",
-      "tags": ["ml", "deep-learning", "courses", "tutorials"]
-    },
-    {
-      "title": "Y Combinator",
-      "host": "YC Team",
-      "url": "https://www.youtube.com/@ycombinator",
-      "description": "Startup advice, founder interviews, and AI-focused discussions from the world's top startup accelerator.",
-      "subscribers": "1.4M",
-      "frequency": "multiple per week",
-      "category": "interviews",
-      "tags": ["startups", "ai", "entrepreneurship", "vc"]
-    },
-    {
-      "title": "AI Explained",
-      "host": "Philip",
-      "url": "https://www.youtube.com/@aiexplained-official",
-      "description": "Thoughtful analysis of AI capabilities, benchmarks, and safety research with careful attention to nuance.",
-      "subscribers": "520K",
-      "frequency": "weekly",
-      "category": "news",
-      "tags": ["ai-safety", "benchmarks", "analysis", "agi"]
-    },
-    {
-      "title": "TheAIGRID",
-      "host": "TheAIGRID",
-      "url": "https://www.youtube.com/@TheAiGrid",
-      "description": "Daily AI news coverage and analysis of breakthroughs, model releases, and industry trends.",
-      "subscribers": "410K",
-      "frequency": "daily",
-      "category": "news",
-      "tags": ["ai", "news", "models", "industry"]
-    },
-    {
-      "title": "Moonshots with Peter Diamandis",
-      "host": "Peter Diamandis",
-      "url": "https://www.youtube.com/@PeterDiamandis",
-      "description": "Conversations about exponential technologies, AI's impact on humanity, and the future of abundance.",
-      "subscribers": "420K",
-      "frequency": "weekly",
-      "category": "interviews",
-      "tags": ["ai", "future", "exponential", "longevity"]
-    },
-    {
-      "title": "Yannic Kilcher",
-      "host": "Yannic Kilcher",
-      "url": "https://www.youtube.com/@YannicKilcher",
-      "description": "Detailed technical paper reviews and ML news from a researcher's perspective, covering arxiv papers in depth.",
-      "subscribers": "260K",
-      "frequency": "weekly",
-      "category": "technical",
-      "tags": ["research", "papers", "ml", "technical"]
-    },
-    {
-      "title": "Wes Roth",
-      "host": "Wes Roth",
-      "url": "https://www.youtube.com/@WesRoth",
-      "description": "AI news analysis and commentary on AGI progress, AI safety, and the societal implications of artificial intelligence.",
-      "subscribers": "380K",
-      "frequency": "multiple per week",
-      "category": "news",
-      "tags": ["agi", "ai-safety", "news", "commentary"]
-    },
-    {
-      "title": "Machine Learning Street Talk",
-      "host": "Tim Scarfe, Keith Duggar, Yannic Kilcher",
-      "url": "https://www.youtube.com/@MachineLearningStreetTalk",
-      "description": "In-depth technical discussions and interviews with leading ML researchers on cutting-edge topics.",
-      "subscribers": "160K",
-      "frequency": "weekly",
-      "category": "technical",
-      "tags": ["ml", "research", "interviews", "technical"]
-    },
-    {
-      "title": "No Priors",
-      "host": "Sarah Guo & Elad Gil",
-      "url": "https://www.youtube.com/@NoPriorsPodcast",
-      "description": "AI-focused podcast by top tech investors featuring founders and researchers building the AI future.",
-      "subscribers": "95K",
-      "frequency": "weekly",
-      "category": "interviews",
-      "tags": ["ai", "startups", "investing", "founders"]
-    },
-    {
-      "title": "a16z",
-      "host": "Andreessen Horowitz",
-      "url": "https://www.youtube.com/@a16z",
-      "description": "Tech and AI insights from one of Silicon Valley's most influential VC firms — talks, demos, and founder stories.",
-      "subscribers": "230K",
-      "frequency": "multiple per week",
-      "category": "interviews",
-      "tags": ["ai", "startups", "investing", "tech"]
-    },
-    {
-      "title": "Latent Space",
-      "host": "Alessio & swyx",
-      "url": "https://www.youtube.com/@LatentSpaceTV",
-      "description": "The AI engineer podcast — deep technical interviews with builders shipping AI products and infrastructure.",
-      "subscribers": "52K",
-      "frequency": "weekly",
-      "category": "technical",
-      "tags": ["ai-engineering", "infrastructure", "llm", "technical"]
-    },
-    {
       "title": "3Blue1Brown",
       "host": "Grant Sanderson",
+      "channelId": "UCYO_jab_esuFRV4b17AJtAw",
       "url": "https://www.youtube.com/@3blue1brown",
       "description": "Beautiful visual explanations of mathematics, neural networks, and the concepts underlying modern AI.",
       "subscribers": "6.6M",
-      "frequency": "monthly",
       "category": "educational",
       "tags": ["math", "neural-networks", "visualization", "educational"]
     },
     {
-      "title": "David Shapiro",
-      "host": "David Shapiro",
-      "url": "https://www.youtube.com/@DavidShapiroAutomator",
-      "description": "Thoughtful discussions on AGI, cognitive architectures, AI alignment, and building autonomous AI systems.",
-      "subscribers": "260K",
-      "frequency": "multiple per week",
+      "title": "Two Minute Papers",
+      "host": "Károly Zsolnai-Fehér",
+      "channelId": "UCbfYPyITQ-7l4upoX8nvctg",
+      "url": "https://www.youtube.com/@TwoMinutePapers",
+      "description": "Bite-sized breakdowns of cutting-edge AI research papers with visual demos and clear explanations.",
+      "subscribers": "1.6M",
+      "category": "technical",
+      "tags": ["research", "papers", "computer-vision", "ml"]
+    },
+    {
+      "title": "Fireship",
+      "host": "Jeff Delaney",
+      "channelId": "UCsBjURrPoezykLs9EqgamOA",
+      "url": "https://www.youtube.com/@Fireship",
+      "description": "Fast-paced tech news and tutorials. Known for '100 seconds' explainers and weekly AI news roundups.",
+      "subscribers": "3.4M",
       "category": "news",
-      "tags": ["agi", "alignment", "autonomous-ai", "philosophy"]
+      "tags": ["ai", "webdev", "news", "tutorials"]
     },
     {
-      "title": "AI Jason",
-      "host": "Jason",
-      "url": "https://www.youtube.com/@AIJasonZ",
-      "description": "Practical AI tutorials, tool reviews, and guides for building AI-powered applications and automations.",
-      "subscribers": "310K",
-      "frequency": "weekly",
+      "title": "AI Explained",
+      "host": "Philip",
+      "channelId": "UCNJ1Ymd5yFuUPtn21xtRbbw",
+      "url": "https://www.youtube.com/@aiexplained-official",
+      "description": "Thoughtful analysis of AI capabilities, benchmarks, and safety research with careful attention to nuance.",
+      "subscribers": "520K",
+      "category": "news",
+      "tags": ["ai-safety", "benchmarks", "analysis", "agi"]
+    },
+    {
+      "title": "DeepLearning.AI",
+      "host": "Andrew Ng",
+      "channelId": "UCcIXc5mJsHVYTZR1maL5l9w",
+      "url": "https://www.youtube.com/@Deeplearningai",
+      "description": "Educational content from Andrew Ng's team — short courses, event talks, and AI explainers for practitioners.",
+      "subscribers": "380K",
       "category": "educational",
-      "tags": ["ai-tools", "tutorials", "automation", "practical"]
+      "tags": ["ml", "deep-learning", "courses", "tutorials"]
     },
     {
-      "title": "Cognitive Revolution",
-      "host": "Nathan Labenz",
-      "url": "https://www.youtube.com/@CognitiveRevolutionPodcast",
-      "description": "Interviews with AI researchers and builders exploring the cutting edge of AI capabilities and implications.",
-      "subscribers": "28K",
-      "frequency": "weekly",
+      "title": "Matt Wolfe",
+      "host": "Matt Wolfe",
+      "channelId": "UCJMQiMZ04sCiMFEKGB1Uaew",
+      "url": "https://www.youtube.com/@maboroshi",
+      "description": "Weekly AI news roundups, tool reviews, and tutorials covering the latest in generative AI and practical applications.",
+      "subscribers": "870K",
+      "category": "news",
+      "tags": ["ai-tools", "generative-ai", "news", "tutorials"]
+    },
+    {
+      "title": "Yannic Kilcher",
+      "host": "Yannic Kilcher",
+      "channelId": "UCZHmQk67mSJgfCCTn7xBfew",
+      "url": "https://www.youtube.com/@YannicKilcher",
+      "description": "Detailed technical paper reviews and ML news from a researcher's perspective, covering arxiv papers in depth.",
+      "subscribers": "260K",
+      "category": "technical",
+      "tags": ["research", "papers", "ml", "technical"]
+    }
+  ],
+  "famousEpisodes": [
+    {
+      "title": "Intro to Large Language Models",
+      "channel": "Andrej Karpathy",
+      "videoId": "zjkBMFhNj_g",
+      "thumbnail": "https://i.ytimg.com/vi/zjkBMFhNj_g/mqdefault.jpg",
+      "duration": "59:47",
+      "views": "6.2M",
+      "date": "2023-11-22",
+      "category": "technical",
+      "tags": ["llm", "neural-networks", "deep-learning"]
+    },
+    {
+      "title": "Let's Build GPT: from scratch, in code",
+      "channel": "Andrej Karpathy",
+      "videoId": "kCc8FmEb1nY",
+      "thumbnail": "https://i.ytimg.com/vi/kCc8FmEb1nY/mqdefault.jpg",
+      "duration": "1:56:20",
+      "views": "10M",
+      "date": "2023-01-17",
+      "category": "technical",
+      "tags": ["gpt", "transformers", "coding"]
+    },
+    {
+      "title": "But what is a neural network? | Deep learning chapter 1",
+      "channel": "3Blue1Brown",
+      "videoId": "aircAruvnKk",
+      "thumbnail": "https://i.ytimg.com/vi/aircAruvnKk/mqdefault.jpg",
+      "duration": "19:13",
+      "views": "18M",
+      "date": "2017-10-05",
+      "category": "educational",
+      "tags": ["neural-networks", "deep-learning", "visualization"]
+    },
+    {
+      "title": "Sam Altman: OpenAI, GPT-5, Sora, Board Saga, Elon Musk, Ilya, Power & AGI",
+      "channel": "Lex Fridman",
+      "videoId": "jvqFAi7vkBc",
+      "thumbnail": "https://i.ytimg.com/vi/jvqFAi7vkBc/mqdefault.jpg",
+      "duration": "2:37:51",
+      "views": "9.5M",
+      "date": "2024-03-18",
       "category": "interviews",
-      "tags": ["ai", "research", "interviews", "cognition"]
+      "tags": ["openai", "agi", "sam-altman"]
+    },
+    {
+      "title": "Mark Zuckerberg: Open Source, LLaMA, AI, and the Future of Meta",
+      "channel": "Dwarkesh Podcast",
+      "videoId": "xQOloBrI78A",
+      "thumbnail": "https://i.ytimg.com/vi/xQOloBrI78A/mqdefault.jpg",
+      "duration": "1:08:17",
+      "views": "3.2M",
+      "date": "2024-04-18",
+      "category": "interviews",
+      "tags": ["meta", "llama", "open-source"]
+    },
+    {
+      "title": "Ilya Sutskever: Deep Learning, AGI & the Future of AI",
+      "channel": "Lex Fridman",
+      "videoId": "13CZPWmke6A",
+      "thumbnail": "https://i.ytimg.com/vi/13CZPWmke6A/mqdefault.jpg",
+      "duration": "1:07:41",
+      "views": "2.8M",
+      "date": "2023-10-26",
+      "category": "interviews",
+      "tags": ["agi", "deep-learning", "openai"]
+    },
+    {
+      "title": "Attention in transformers, visually explained | DL chapter 6",
+      "channel": "3Blue1Brown",
+      "videoId": "eMlx5fFNoYc",
+      "thumbnail": "https://i.ytimg.com/vi/eMlx5fFNoYc/mqdefault.jpg",
+      "duration": "27:14",
+      "views": "5.1M",
+      "date": "2024-04-07",
+      "category": "educational",
+      "tags": ["transformers", "attention", "visualization"]
+    },
+    {
+      "title": "The moment we satisface a goal to create the next AI",
+      "channel": "Two Minute Papers",
+      "videoId": "SjhIlw3Iffs",
+      "thumbnail": "https://i.ytimg.com/vi/SjhIlw3Iffs/mqdefault.jpg",
+      "duration": "6:47",
+      "views": "2.3M",
+      "date": "2023-03-17",
+      "category": "technical",
+      "tags": ["agi", "research", "breakthroughs"]
+    },
+    {
+      "title": "Dario Amodei: Anthropic, Claude, and the Future of AI Safety",
+      "channel": "Lex Fridman",
+      "videoId": "ugvHCXCOmm4",
+      "thumbnail": "https://i.ytimg.com/vi/ugvHCXCOmm4/mqdefault.jpg",
+      "duration": "2:52:03",
+      "views": "3.5M",
+      "date": "2024-08-12",
+      "category": "interviews",
+      "tags": ["anthropic", "ai-safety", "claude"]
+    },
+    {
+      "title": "The spelled-out intro to neural networks and backpropagation",
+      "channel": "Andrej Karpathy",
+      "videoId": "VMj-3S1tku0",
+      "thumbnail": "https://i.ytimg.com/vi/VMj-3S1tku0/mqdefault.jpg",
+      "duration": "2:25:47",
+      "views": "5.8M",
+      "date": "2022-08-17",
+      "category": "technical",
+      "tags": ["neural-networks", "backpropagation", "coding"]
+    },
+    {
+      "title": "How I use LLMs as a Staff Engineer",
+      "channel": "Fireship",
+      "videoId": "CqkZ9EuOn3M",
+      "thumbnail": "https://i.ytimg.com/vi/CqkZ9EuOn3M/mqdefault.jpg",
+      "duration": "8:12",
+      "views": "2.1M",
+      "date": "2024-06-07",
+      "category": "news",
+      "tags": ["llm", "productivity", "coding"]
+    },
+    {
+      "title": "John Carmack: Doom, Quake, VR, AGI, Programming, and Mars",
+      "channel": "Lex Fridman",
+      "videoId": "I845O57ZSy4",
+      "thumbnail": "https://i.ytimg.com/vi/I845O57ZSy4/mqdefault.jpg",
+      "duration": "5:13:02",
+      "views": "7.1M",
+      "date": "2022-08-05",
+      "category": "interviews",
+      "tags": ["programming", "agi", "gaming"]
+    },
+    {
+      "title": "The Deep Learning Revolution | AI Explained",
+      "channel": "AI Explained",
+      "videoId": "ZJixNvx9BAc",
+      "thumbnail": "https://i.ytimg.com/vi/ZJixNvx9BAc/mqdefault.jpg",
+      "duration": "32:15",
+      "views": "1.4M",
+      "date": "2024-01-15",
+      "category": "news",
+      "tags": ["deep-learning", "analysis", "history"]
+    },
+    {
+      "title": "Andrew Ng: Opportunities in AI — Building Startups",
+      "channel": "DeepLearning.AI",
+      "videoId": "5p248yoa3oE",
+      "thumbnail": "https://i.ytimg.com/vi/5p248yoa3oE/mqdefault.jpg",
+      "duration": "43:25",
+      "views": "1.9M",
+      "date": "2023-09-14",
+      "category": "educational",
+      "tags": ["startups", "ai", "career"]
+    },
+    {
+      "title": "GPT-4 — The Complete Breakdown",
+      "channel": "Fireship",
+      "videoId": "TgZv4Gf87d0",
+      "thumbnail": "https://i.ytimg.com/vi/TgZv4Gf87d0/mqdefault.jpg",
+      "duration": "6:15",
+      "views": "3.8M",
+      "date": "2023-03-15",
+      "category": "news",
+      "tags": ["gpt-4", "openai", "models"]
+    },
+    {
+      "title": "Yann LeCun: Meta AI, Open Source, Limits of LLMs, and AGI",
+      "channel": "Lex Fridman",
+      "videoId": "5t1vTLU7s40",
+      "thumbnail": "https://i.ytimg.com/vi/5t1vTLU7s40/mqdefault.jpg",
+      "duration": "3:18:29",
+      "views": "2.9M",
+      "date": "2024-01-22",
+      "category": "interviews",
+      "tags": ["meta", "open-source", "agi"]
     }
   ]
 }
