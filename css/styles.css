@@ -471,7 +471,7 @@ a:hover {
 .highlight-card__category--tool { background: #E0F2F1; color: #00695C; }
 .highlight-card__category--inference { background: #FFF3E0; color: #E65100; }
 
-/* --- Mobile: uniform list rows inside a single card --- */
+/* --- Mobile: horizontal scroll matching desktop layout --- */
 @media (max-width: 600px) {
   .highlights {
     padding: 12px;
@@ -484,45 +484,23 @@ a:hover {
 
   .highlights__cards {
     display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    gap: 0;
-    overflow: visible;
-    background: var(--md-surface);
-    border-radius: var(--radius-sm);
-    box-shadow: var(--elevation-1);
+    gap: 10px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+  }
+
+  .highlights__cards::-webkit-scrollbar {
+    display: none;
   }
 
   .highlight-card {
-    flex-direction: row;
-    align-items: center;
-    min-width: 0;
-    max-width: none;
-    padding: 12px;
-    gap: 10px;
-    border-radius: 0;
-    box-shadow: none;
-    background: transparent;
-    border-left: 3px solid transparent;
-    border-bottom: 1px solid var(--md-grey-100);
-  }
-
-  .highlight-card:last-child {
-    border-bottom: none;
-  }
-
-  .highlight-card:hover {
-    box-shadow: none;
-    transform: none;
-    background: var(--md-grey-50);
-  }
-
-  .highlight-card__header {
-    flex-shrink: 0;
-  }
-
-  .highlight-card__company {
-    display: none;
+    min-width: 200px;
+    max-width: 220px;
+    padding: 12px 14px;
+    scroll-snap-align: start;
   }
 
   .highlight-card__logo {
@@ -542,20 +520,17 @@ a:hover {
   }
 
   .highlight-card__title {
-    flex: 1;
-    min-width: 0;
-    font-size: 13px;
-    -webkit-line-clamp: 1;
+    font-size: 12px;
+    -webkit-line-clamp: 2;
+  }
+
+  .highlight-card__company {
+    font-size: 9px;
   }
 
   .highlight-card__category {
-    flex-shrink: 0;
     font-size: 9px;
     padding: 2px 6px;
-  }
-
-  .highlight-card__meta {
-    display: none;
   }
 }
 
