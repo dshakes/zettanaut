@@ -1,4 +1,4 @@
-import { createNewsCard, createPaperCard, createReleaseCard, createResourceCard, timeAgo } from './cards.js';
+import { createNewsCard, createPaperCard, createReleaseCard, createResourceCard, createPodcastCard, timeAgo } from './cards.js';
 
 const PAGE_SIZE = 10;
 
@@ -81,6 +81,10 @@ export function renderPapers(items) {
   renderGrid('papersGrid', items, createPaperCard);
   const badge = document.getElementById('papersCount');
   if (badge) badge.textContent = items.length || '';
+}
+
+export function renderPodcasts(items) {
+  renderGrid('podcastsGrid', items, createPodcastCard);
 }
 
 export function renderResources(categories) {

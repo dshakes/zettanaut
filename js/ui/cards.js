@@ -137,6 +137,29 @@ export function createResourceCard(resource) {
   return el;
 }
 
+export function createPodcastCard(podcast) {
+  const el = document.createElement('article');
+  el.className = 'podcast-card';
+  el.dataset.category = podcast.category;
+
+  const tags = (podcast.tags || []).slice(0, 4);
+
+  el.innerHTML = `
+    <div class="podcast-card__header">
+      <span class="podcast-card__category podcast-card__category--${podcast.category}">${escapeHTML(podcast.category)}</span>
+      <span class="podcast-card__frequency"><span class="material-icons-outlined">schedule</span>${escapeHTML(podcast.frequency)}</span>
+    </div>
+    <h3 class="podcast-card__title"><a href="${escapeAttr(podcast.url)}" target="_blank" rel="noopener">${escapeHTML(podcast.title)}</a></h3>
+    <span class="podcast-card__host"><span class="material-icons-outlined">person</span>${escapeHTML(podcast.host)}</span>
+    <p class="podcast-card__description">${escapeHTML(podcast.description)}</p>
+    <div class="podcast-card__meta">
+      <span class="podcast-card__subscribers"><span class="material-icons-outlined">group</span>${escapeHTML(podcast.subscribers)} subscribers</span>
+    </div>
+    ${tags.length ? `<div class="podcast-card__tags">${tags.map(t => `<span class="podcast-card__tag">${escapeHTML(t)}</span>`).join('')}</div>` : ''}
+  `;
+  return el;
+}
+
 function escapeHTML(str) {
   const div = document.createElement('div');
   div.textContent = str;

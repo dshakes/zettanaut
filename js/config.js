@@ -10,6 +10,7 @@ export const CONFIG = {
     papers: 30 * 60 * 1000,
     releases: 5 * 60 * 1000,
     resources: 60 * 60 * 1000,
+    podcasts: 4 * 60 * 60 * 1000,
   },
   MAX_ITEMS_PER_SOURCE: 20,
   SEARCH_QUERIES: {

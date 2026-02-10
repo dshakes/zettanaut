@@ -1,6 +1,6 @@
 import { initTabs } from './ui/tabs.js';
 import { showLoader, hideLoader } from './ui/loader.js';
-import { renderNews, renderReleases, renderPapers, renderResources, renderArchive, renderHighlights, buildSourceFilters } from './ui/renderer.js';
+import { renderNews, renderReleases, renderPapers, renderResources, renderPodcasts, renderArchive, renderHighlights, buildSourceFilters } from './ui/renderer.js';
 import { showToast } from './ui/toast.js';
 import { fetchAllNews, fetchAllReleases, fetchAllPapers } from './services/aggregator.js';
 import { startScheduler } from './services/scheduler.js';
@@ -12,6 +12,7 @@ let currentReleases = [];
 let currentPapers = [];
 let currentArchive = [];
 let resourcesData = null;
+let podcastsData = null;
 
 const ONE_YEAR_MS = 365 * 24 * 60 * 60 * 1000;
 
@@ -35,6 +36,8 @@ const filters = {
   resourceCost: 'all',
   resourceLevel: 'all',
   resourceTopic: 'all',
+  podcastTopic: 'all',
+  podcastSort: 'popularity',
 };
 
 function sortItems(items, sortBy) {
@@ -123,6 +126,54 @@ async function loadResources() {
   }
 }
 
+async function loadPodcasts() {
+  try {
+    const resp = await fetch('data/podcasts.json');
+    podcastsData = await resp.json();
+    filterPodcasts();
+  } catch {
+    showToast('Could not load podcasts', 'error');
+  }
+}
+
+function parseSubscribers(str) {
+  if (!str) return 0;
+  const num = parseFloat(str);
+  if (str.includes('M')) return num * 1_000_000;
+  if (str.includes('K')) return num * 1_000;
+  return num;
+}
+
+function filterPodcasts() {
+  if (!podcastsData) return;
+  let items = podcastsData.podcasts;
+
+  // Topic filter
+  if (filters.podcastTopic !== 'all') {
+    items = items.filter(p => p.category === filters.podcastTopic);
+  }
+
+  // Search filter
+  const q = document.getElementById('podcastsSearch')?.value?.toLowerCase();
+  if (q) {
+    items = items.filter(p =>
+      p.title.toLowerCase().includes(q) ||
+      p.host.toLowerCase().includes(q) ||
+      p.description.toLowerCase().includes(q) ||
+      p.tags?.some(t => t.toLowerCase().includes(q))
+    );
+  }
+
+  // Sort
+  if (filters.podcastSort === 'az') {
+    items = [...items].sort((a, b) => a.title.localeCompare(b.title));
+  } else {
+    items = [...items].sort((a, b) => parseSubscribers(b.subscribers) - parseSubscribers(a.subscribers));
+  }
+
+  renderPodcasts(items);
+}
+
 const RESOURCE_TOPIC_TAGS = {
   inference: ['inference', 'serving', 'vllm', 'sglang', 'tensorrt', 'triton', 'batching', 'quantization', 'throughput', 'optimization', 'llama-cpp', 'gpu', 'local-inference', 'local-llm', 'llm-serving'],
   vllm: ['vllm'],
@@ -164,6 +215,8 @@ function applyFilters(section) {
   } else if (section === 'archive') {
     const q = document.getElementById('archiveSearch').value;
     renderArchive(filterAndSort(currentArchive, filters.archiveSource, q, filters.archiveSort));
+  } else if (section === 'podcasts') {
+    filterPodcasts();
   }
 }
 
@@ -254,6 +307,17 @@ function setupEventListeners() {
   setupTopicFilterListeners('newsTopicFilters', 'news', 'newsTopic');
   setupTopicFilterListeners('releasesTopicFilters', 'releases', 'releasesTopic');
 
+  // Podcast search, sort, topic filters
+  setupSearchListeners('podcastsSearch', 'podcasts');
+  const podcastsSortEl = document.getElementById('podcastsSort');
+  if (podcastsSortEl) {
+    podcastsSortEl.addEventListener('change', () => {
+      filters.podcastSort = podcastsSortEl.value;
+      filterPodcasts();
+    });
+  }
+  setupTopicFilterListeners('podcastsTopicFilters', 'podcasts', 'podcastTopic');
+
   // Resource topic filters
   const resourceTopicEl = document.getElementById('resourcesTopicFilters');
   if (resourceTopicEl) {
@@ -289,7 +353,7 @@ async function init() {
   showLoader('releasesGrid');
   showLoader('papersGrid');
 
-  await Promise.allSettled([loadNews(), loadReleases(), loadPapers(), loadResources()]);
+  await Promise.allSettled([loadNews(), loadReleases(), loadPapers(), loadResources(), loadPodcasts()]);
 
   // Build archive from all loaded data
   buildArchive();
@@ -315,6 +379,10 @@ async function init() {
     resources: {
       interval: CONFIG.REFRESH_INTERVALS.resources,
       callback: async () => { await loadResources(); updateTimestamp(); },
+    },
+    podcasts: {
+      interval: CONFIG.REFRESH_INTERVALS.podcasts,
+      callback: async () => { await loadPodcasts(); updateTimestamp(); },
     },
   });
 }
