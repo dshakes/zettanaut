@@ -2,36 +2,6 @@
   "lastUpdated": "2026-02-09",
   "channels": [
     {
-      "title": "Lex Fridman Podcast",
-      "host": "Lex Fridman",
-      "channelId": "UCSHZKyawb77ixDdsGog4iWA",
-      "url": "https://www.youtube.com/@lexfridman",
-      "description": "Long-form interviews with AI researchers, scientists, and tech leaders exploring intelligence, consciousness, and the future.",
-      "subscribers": "4.9M",
-      "category": "interviews",
-      "tags": ["ai", "agi", "research", "philosophy"]
-    },
-    {
-      "title": "Dwarkesh Podcast",
-      "host": "Dwarkesh Patel",
-      "channelId": "UC7D862xSGkforaMsEp7lFKg",
-      "url": "https://www.youtube.com/@DwarkeshPatel",
-      "description": "Deep-dive interviews with top AI researchers and technologists on the future of intelligence and civilization.",
-      "subscribers": "420K",
-      "category": "interviews",
-      "tags": ["ai", "agi", "research", "policy"]
-    },
-    {
-      "title": "Andrej Karpathy",
-      "host": "Andrej Karpathy",
-      "channelId": "UCXUPKJO5MZQN11PqgIvyuvQ",
-      "url": "https://www.youtube.com/@AndrejKarpathy",
-      "description": "In-depth technical lectures on neural networks, LLMs, and building AI systems from a former OpenAI/Tesla AI lead.",
-      "subscribers": "980K",
-      "category": "technical",
-      "tags": ["deep-learning", "llm", "neural-networks", "tutorials"]
-    },
-    {
       "title": "3Blue1Brown",
       "host": "Grant Sanderson",
       "channelId": "UCYO_jab_esuFRV4b17AJtAw",
@@ -42,14 +12,14 @@
       "tags": ["math", "neural-networks", "visualization", "educational"]
     },
     {
-      "title": "Two Minute Papers",
-      "host": "Károly Zsolnai-Fehér",
-      "channelId": "UCbfYPyITQ-7l4upoX8nvctg",
-      "url": "https://www.youtube.com/@TwoMinutePapers",
-      "description": "Bite-sized breakdowns of cutting-edge AI research papers with visual demos and clear explanations.",
-      "subscribers": "1.6M",
-      "category": "technical",
-      "tags": ["research", "papers", "computer-vision", "ml"]
+      "title": "Lex Fridman Podcast",
+      "host": "Lex Fridman",
+      "channelId": "UCSHZKyawb77ixDdsGog4iWA",
+      "url": "https://www.youtube.com/@lexfridman",
+      "description": "Long-form interviews with AI researchers, scientists, and tech leaders exploring intelligence, consciousness, and the future.",
+      "subscribers": "4.9M",
+      "category": "interviews",
+      "tags": ["ai", "agi", "research", "philosophy"]
     },
     {
       "title": "Fireship",
@@ -62,24 +32,24 @@
       "tags": ["ai", "webdev", "news", "tutorials"]
     },
     {
-      "title": "AI Explained",
-      "host": "Philip",
-      "channelId": "UCNJ1Ymd5yFuUPtn21xtRbbw",
-      "url": "https://www.youtube.com/@aiexplained-official",
-      "description": "Thoughtful analysis of AI capabilities, benchmarks, and safety research with careful attention to nuance.",
-      "subscribers": "520K",
-      "category": "news",
-      "tags": ["ai-safety", "benchmarks", "analysis", "agi"]
+      "title": "Two Minute Papers",
+      "host": "Károly Zsolnai-Fehér",
+      "channelId": "UCbfYPyITQ-7l4upoX8nvctg",
+      "url": "https://www.youtube.com/@TwoMinutePapers",
+      "description": "Bite-sized breakdowns of cutting-edge AI research papers with visual demos and clear explanations.",
+      "subscribers": "1.6M",
+      "category": "technical",
+      "tags": ["research", "papers", "computer-vision", "ml"]
     },
     {
-      "title": "DeepLearning.AI",
-      "host": "Andrew Ng",
-      "channelId": "UCcIXc5mJsHVYTZR1maL5l9w",
-      "url": "https://www.youtube.com/@Deeplearningai",
-      "description": "Educational content from Andrew Ng's team — short courses, event talks, and AI explainers for practitioners.",
-      "subscribers": "380K",
-      "category": "educational",
-      "tags": ["ml", "deep-learning", "courses", "tutorials"]
+      "title": "Andrej Karpathy",
+      "host": "Andrej Karpathy",
+      "channelId": "UCXUPKJO5MZQN11PqgIvyuvQ",
+      "url": "https://www.youtube.com/@AndrejKarpathy",
+      "description": "In-depth technical lectures on neural networks, LLMs, and building AI systems from a former OpenAI/Tesla AI lead.",
+      "subscribers": "980K",
+      "category": "technical",
+      "tags": ["deep-learning", "llm", "neural-networks", "tutorials"]
     },
     {
       "title": "Matt Wolfe",
@@ -92,14 +62,24 @@
       "tags": ["ai-tools", "generative-ai", "news", "tutorials"]
     },
     {
-      "title": "Yannic Kilcher",
-      "host": "Yannic Kilcher",
-      "channelId": "UCZHmQk67mSJgfCCTn7xBfew",
-      "url": "https://www.youtube.com/@YannicKilcher",
-      "description": "Detailed technical paper reviews and ML news from a researcher's perspective, covering arxiv papers in depth.",
-      "subscribers": "260K",
-      "category": "technical",
-      "tags": ["research", "papers", "ml", "technical"]
+      "title": "AI Explained",
+      "host": "Philip",
+      "channelId": "UCNJ1Ymd5yFuUPtn21xtRbbw",
+      "url": "https://www.youtube.com/@aiexplained-official",
+      "description": "Thoughtful analysis of AI capabilities, benchmarks, and safety research with careful attention to nuance.",
+      "subscribers": "520K",
+      "category": "news",
+      "tags": ["ai-safety", "benchmarks", "analysis", "agi"]
+    },
+    {
+      "title": "Dwarkesh Podcast",
+      "host": "Dwarkesh Patel",
+      "channelId": "UC7D862xSGkforaMsEp7lFKg",
+      "url": "https://www.youtube.com/@DwarkeshPatel",
+      "description": "Deep-dive interviews with top AI researchers and technologists on the future of intelligence and civilization.",
+      "subscribers": "420K",
+      "category": "interviews",
+      "tags": ["ai", "agi", "research", "policy"]
     }
   ],
   "famousEpisodes": [

@@ -1,5 +1,5 @@
 import { initTabs } from './ui/tabs.js';
-import { showLoader, hideLoader, showPodcastLoader } from './ui/loader.js';
+import { showLoader, hideLoader } from './ui/loader.js';
 import { renderNews, renderReleases, renderPapers, renderResources, renderPodcastsTab, renderArchive, renderHighlights, buildSourceFilters } from './ui/renderer.js';
 import { showToast } from './ui/toast.js';
 import { fetchAllNews, fetchAllReleases, fetchAllPapers } from './services/aggregator.js';
@@ -129,15 +129,17 @@ async function loadResources() {
 
 async function loadPodcasts() {
   try {
-    showPodcastLoader('podcastsChannelGroups');
     const resp = await fetch('data/podcasts.json');
     podcastsData = await resp.json();
 
-    // Fetch RSS feeds in parallel
+    // Render immediately using famous episodes as video fallbacks
+    filterPodcasts();
+
+    // Fetch live RSS feeds in background, re-render when done
     const { videosByChannel, errorCount } = await fetchAllChannelVideos(podcastsData.channels);
     podcastVideosByChannel = videosByChannel;
-
     filterPodcasts();
+
     if (errorCount) showToast(`${errorCount} podcast feed(s) unavailable`, 'error');
   } catch {
     showToast('Could not load podcasts', 'error');
@@ -191,7 +193,20 @@ function filterPodcasts() {
   }
   episodes = [...episodes].sort((a, b) => parseViewCount(b.views) - parseViewCount(a.views));
 
-  renderPodcastsTab(channels, podcastVideosByChannel, episodes);
+  // Build fallback video map from famous episodes (keyed by channel title)
+  const episodesByChannel = {};
+  podcastsData.famousEpisodes.forEach(ep => {
+    if (!episodesByChannel[ep.channel]) episodesByChannel[ep.channel] = [];
+    episodesByChannel[ep.channel].push({
+      title: ep.title,
+      url: `https://www.youtube.com/watch?v=${ep.videoId}`,
+      videoId: ep.videoId,
+      publishedAt: ep.date,
+      thumbnail: ep.thumbnail,
+    });
+  });
+
+  renderPodcastsTab(channels, podcastVideosByChannel, episodes, episodesByChannel);
 }
 
 const RESOURCE_TOPIC_TAGS = {

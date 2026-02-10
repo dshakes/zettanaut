@@ -137,16 +137,16 @@ export function createResourceCard(resource) {
   return el;
 }
 
-export function createPodcasterGroup(channel, videos) {
+export function createPodcasterGroup(channel, videos, fallbackVideos = []) {
   const el = document.createElement('div');
-  el.className = 'channel-group';
   el.dataset.category = channel.category;
 
   const desc = channel.description.length > 120
     ? channel.description.slice(0, 120) + '...'
     : channel.description;
 
-  const recentVideos = videos.slice(0, 3);
+  const displayVideos = (videos.length > 0 ? videos : fallbackVideos).slice(0, 3);
+  el.className = `channel-group${displayVideos.length === 0 ? ' channel-group--no-videos' : ''}`;
 
   el.innerHTML = `
     <div class="channel-group__info">
@@ -159,8 +159,8 @@ export function createPodcasterGroup(channel, videos) {
       <p class="channel-group__desc">${escapeHTML(desc)}</p>
       <a href="${escapeAttr(channel.url)}" target="_blank" rel="noopener" class="channel-group__link">View Channel <span class="material-icons-outlined">arrow_forward</span></a>
     </div>
-    <div class="channel-group__videos">
-      ${recentVideos.length ? recentVideos.map(v => `
+    ${displayVideos.length ? `<div class="channel-group__videos">
+      ${displayVideos.map(v => `
         <a href="${escapeAttr(v.url)}" target="_blank" rel="noopener" class="channel-group__video">
           <div class="channel-group__video-img">
             <img src="${escapeAttr(v.thumbnail)}" alt="" loading="lazy">
@@ -169,8 +169,8 @@ export function createPodcasterGroup(channel, videos) {
           <span class="channel-group__video-title">${escapeHTML(v.title)}</span>
           <span class="channel-group__video-date">${formatVideoDate(v.publishedAt)}</span>
         </a>
-      `).join('') : `<a href="${escapeAttr(channel.url)}" target="_blank" rel="noopener" class="channel-group__yt-fallback"><span class="material-icons-outlined">play_circle</span> Watch on YouTube</a>`}
-    </div>
+      `).join('')}
+    </div>` : ''}
   `;
 
   return el;
