@@ -1,3 +1,6 @@
+import { freshnessTag } from '../services/freshness.js';
+import { isSaved } from '../services/bookmarks.js';
+
 export function timeAgo(dateStr) {
   const seconds = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
   if (seconds < 60) return 'just now';
@@ -8,6 +11,18 @@ export function timeAgo(dateStr) {
   const days = Math.floor(hours / 24);
   if (days < 30) return `${days}d ago`;
   return new Date(dateStr).toLocaleDateString();
+}
+
+function freshnessBadge(item) {
+  const tag = freshnessTag(item);
+  if (!tag) return '';
+  const labels = { new: 'NEW', hot: 'HOT', trending: 'TRENDING' };
+  return `<span class="card__freshness card__freshness--${tag}">${labels[tag]}</span>`;
+}
+
+function bookmarkBtn(item) {
+  const saved = isSaved(item.id);
+  return `<button class="card__bookmark${saved ? ' is-saved' : ''}" data-bookmark="${escapeAttr(item.id)}" title="${saved ? 'Remove from saved' : 'Save for later'}" aria-label="${saved ? 'Remove from saved' : 'Save'}"><span class="material-icons-outlined">${saved ? 'bookmark' : 'bookmark_border'}</span></button>`;
 }
 
 function formatNumber(n) {
@@ -47,6 +62,8 @@ export function createNewsCard(item) {
     <div class="card__score card__score--${scoreClass(item.score)}"></div>
     <div class="card__header">
       <span class="card__source-badge card__source-badge--${sourceBadgeClass(item.source)}">${item.sourceName}</span>
+      ${freshnessBadge(item)}
+      ${bookmarkBtn(item)}
       <h3 class="card__title"><a href="${escapeAttr(item.url)}" target="_blank" rel="noopener">${escapeHTML(item.title)}</a></h3>
     </div>
     ${item.description ? `<p class="card__description">${escapeHTML(item.description)}</p>` : ''}
@@ -72,6 +89,8 @@ export function createPaperCard(item) {
     <div class="card__score card__score--${scoreClass(item.score)}"></div>
     <div class="card__header">
       <span class="card__source-badge card__source-badge--${sourceBadgeClass(item.source)}">${item.sourceName}</span>
+      ${freshnessBadge(item)}
+      ${bookmarkBtn(item)}
       <h3 class="card__title"><a href="${escapeAttr(item.url)}" target="_blank" rel="noopener">${escapeHTML(item.title)}</a></h3>
     </div>
     ${item.description ? `<p class="card__description">${escapeHTML(item.description)}</p>` : ''}
@@ -100,6 +119,8 @@ export function createReleaseCard(item) {
     <div class="card__score card__score--${scoreClass(item.score)}"></div>
     <div class="card__header">
       <span class="card__source-badge card__source-badge--${sourceBadgeClass(item.source)}">${escapeHTML(item.sourceName)}</span>
+      ${freshnessBadge(item)}
+      ${bookmarkBtn(item)}
       <h3 class="card__title"><a href="${escapeAttr(item.url)}" target="_blank" rel="noopener">${escapeHTML(item.title)}</a></h3>
     </div>
     ${item.description ? `<p class="card__description">${escapeHTML(item.description)}</p>` : ''}

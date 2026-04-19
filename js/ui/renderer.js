@@ -1,16 +1,17 @@
 import { createNewsCard, createPaperCard, createReleaseCard, createResourceCard, createPodcasterGroup, createPopularEpisodeCard, timeAgo } from './cards.js';
+import { ageHours, freshnessTag, groupByTime, BUCKET_LABELS, bucketCounts } from '../services/freshness.js';
 
 const PAGE_SIZE = 10;
 
 // Track load-more buttons by grid ID so we can clean them up
 const loadMoreButtons = {};
 
-function renderGrid(gridId, items, cardFactory) {
+function renderGrid(gridId, items, cardFactory, options = {}) {
+  const { grouped = false, emptyTitle = 'No items found', emptyMsg = 'Try refreshing, broadening filters, or checking your connection.' } = options;
   const grid = document.getElementById(gridId);
   if (!grid) return;
   grid.innerHTML = '';
 
-  // Clean up previous load-more button for this grid
   if (loadMoreButtons[gridId]) {
     loadMoreButtons[gridId].remove();
     delete loadMoreButtons[gridId];
@@ -20,25 +21,27 @@ function renderGrid(gridId, items, cardFactory) {
     grid.innerHTML = `
       <div class="empty-state" style="grid-column: 1 / -1;">
         <span class="material-icons-outlined">cloud_off</span>
-        <h3>No items found</h3>
-        <p>Try refreshing or check your network connection.</p>
+        <h3>${escapeHTML(emptyTitle)}</h3>
+        <p>${escapeHTML(emptyMsg)}</p>
       </div>`;
     return;
   }
 
-  // Show first batch only
+  if (grouped) {
+    renderGroupedGrid(grid, items, cardFactory);
+    return;
+  }
+
+  grid.classList.remove('card-grid--grouped');
   let shown = Math.min(PAGE_SIZE, items.length);
   const fragment = document.createDocumentFragment();
   items.slice(0, shown).forEach(item => fragment.appendChild(cardFactory(item)));
   grid.appendChild(fragment);
 
-  // Add Load More button if there are more items
   if (items.length > shown) {
     const btn = document.createElement('button');
     btn.className = 'load-more-btn';
     btn.innerHTML = `<span class="material-icons-outlined">expand_more</span> Load More <span class="load-more-btn__count">(${items.length - shown} remaining)</span>`;
-
-    // Insert button right after the grid element
     grid.after(btn);
     loadMoreButtons[gridId] = btn;
 
@@ -59,28 +62,95 @@ function renderGrid(gridId, items, cardFactory) {
   }
 }
 
-export function renderNews(items) {
-  renderGrid('newsGrid', items, createNewsCard);
-  const badge = document.getElementById('newsCount');
-  if (badge) badge.textContent = items.length || '';
+function renderGroupedGrid(grid, items, cardFactory) {
+  // Switch grid to block flow — sub-grids handle the columns inside each section.
+  grid.classList.add('card-grid--grouped');
+  const groups = groupByTime(items);
+  const fragment = document.createDocumentFragment();
+  for (const bucket of ['today', 'yesterday', 'this-week', 'older']) {
+    const list = groups[bucket];
+    if (!list.length) continue;
+    const section = document.createElement('section');
+    section.className = `time-group time-group--${bucket}`;
+    const header = document.createElement('header');
+    header.className = 'time-group__header';
+    header.innerHTML = `
+      <span class="time-group__dot"></span>
+      <span class="time-group__label">${BUCKET_LABELS[bucket]}</span>
+      <span class="time-group__count">${list.length}</span>
+    `;
+    section.appendChild(header);
+    const sub = document.createElement('div');
+    sub.className = 'card-grid';
+    list.forEach(it => sub.appendChild(cardFactory(it)));
+    section.appendChild(sub);
+    fragment.appendChild(section);
+  }
+  grid.appendChild(fragment);
 }
 
-export function renderReleases(items) {
-  renderGrid('releasesGrid', items, createReleaseCard);
+export function renderNews(items, opts = {}) {
+  renderGrid('newsGrid', items, createNewsCard, { grouped: opts.grouped, emptyTitle: 'No news matches your filters', emptyMsg: 'Try clearing filters or hitting Refresh.' });
+  const badge = document.getElementById('newsCount');
+  if (badge) badge.textContent = items.length || '';
+  updateFreshnessBar('newsFreshnessBar', items);
+}
+
+export function renderReleases(items, opts = {}) {
+  renderGrid('releasesGrid', items, createReleaseCard, { grouped: opts.grouped, emptyTitle: 'No releases match your filters', emptyMsg: 'Try clearing filters or hitting Refresh.' });
   const badge = document.getElementById('releasesCount');
   if (badge) badge.textContent = items.length || '';
+  updateFreshnessBar('releasesFreshnessBar', items);
 }
 
 export function renderArchive(items) {
-  renderGrid('archiveGrid', items, createNewsCard);
+  renderGrid('archiveGrid', items, createNewsCard, { emptyTitle: 'Archive is empty for this view', emptyMsg: 'Items older than a year will appear here once available.' });
   const badge = document.getElementById('archiveCount');
   if (badge) badge.textContent = items.length || '';
 }
 
 export function renderPapers(items) {
-  renderGrid('papersGrid', items, createPaperCard);
+  renderGrid('papersGrid', items, createPaperCard, { emptyTitle: 'No papers match your filters', emptyMsg: 'Try a broader search or hit Refresh.' });
   const badge = document.getElementById('papersCount');
   if (badge) badge.textContent = items.length || '';
+}
+
+export function renderSaved(items) {
+  renderGrid('savedGrid', items, createNewsCard, { emptyTitle: 'Nothing saved yet', emptyMsg: 'Tap the bookmark icon on any card to save it for later.' });
+  const badge = document.getElementById('savedCount');
+  if (badge) badge.textContent = items.length || '';
+}
+
+function updateFreshnessBar(elId, items) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  const counts = bucketCounts(items);
+  const freshDot = counts.new > 0 ? `<span class="freshness-bar__pulse" title="Live"></span>` : '';
+  el.innerHTML = `
+    <span class="freshness-bar__stat">${freshDot}<strong>${counts.new}</strong> new</span>
+    <span class="freshness-bar__stat"><strong>${counts.today}</strong> today</span>
+    <span class="freshness-bar__stat"><strong>${counts.yesterday}</strong> yesterday</span>
+    <span class="freshness-bar__stat"><strong>${counts['this-week']}</strong> this week</span>
+  `;
+}
+
+export function renderSourceHealth(elId, sourceHealth) {
+  const el = document.getElementById(elId);
+  if (!el || !sourceHealth) return;
+  const ok = sourceHealth.filter(s => s.ok);
+  const failed = sourceHealth.filter(s => !s.ok);
+  const total = sourceHealth.length;
+  const cls = failed.length === 0 ? 'ok' : (ok.length === 0 ? 'down' : 'partial');
+  const titleParts = [
+    ...ok.map(s => `✓ ${s.name} (${s.count})`),
+    ...failed.map(s => `✗ ${s.name}`),
+  ];
+  el.innerHTML = `
+    <span class="source-health source-health--${cls}" title="${escapeHTML(titleParts.join('\n'))}">
+      <span class="source-health__dot"></span>
+      ${ok.length}/${total} sources
+    </span>
+  `;
 }
 
 export function renderPodcastsTab(channels, videosByChannel, famousEpisodes) {
@@ -149,41 +219,169 @@ export function renderResources(categories) {
   container.appendChild(fragment);
 }
 
-export function renderHighlights(releases) {
-  const byDate = (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
-  const normalize = s => (s || '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 30);
+// Map item → canonical company key. Order matters (most specific first).
+// Used for diversity-aware ranking and for the company filter chips.
+const COMPANY_PATTERNS = [
+  ['anthropic', /\banthropic\b|\bclaude\b/i],
+  ['openai',    /\bopenai\b|\bgpt[- ]?[0-9]|\bchatgpt\b|\bsora\b|\bcodex\b|\bdall[- ]?e\b/i],
+  ['google',    /\b(google|deepmind|gemini|gemma|notebooklm)\b/i],
+  ['meta',      /\b(meta\s+ai|meta-ai|llama)\b/i],
+  ['microsoft', /\b(microsoft|copilot)\b/i],
+  ['mistral',   /\bmistral\b/i],
+  ['xai',       /\b(xai|x\.ai|grok)\b/i],
+  ['deepseek',  /\bdeepseek\b/i],
+  ['nvidia',    /\bnvidia\b/i],
+  ['qwen',      /\b(qwen|alibaba)\b/i],
+  ['huggingface', /\bhugging\s*face\b/i],
+  ['vllm',      /\bvllm\b/i],
+  ['perplexity', /\bperplexity\b/i],
+  ['cohere',    /\bcohere\b/i],
+  ['cursor',    /\bcursor\b/i],
+];
 
-  // 1. Curated major releases (highest quality, always prioritized)
-  const curated = releases
-    .filter(r => r.source === 'major_releases')
-    .sort(byDate);
+const COMPANY_LABELS = {
+  anthropic: 'Anthropic', openai: 'OpenAI', google: 'Google', meta: 'Meta',
+  microsoft: 'Microsoft', mistral: 'Mistral', xai: 'xAI', deepseek: 'DeepSeek',
+  nvidia: 'NVIDIA', qwen: 'Qwen', huggingface: 'Hugging Face', vllm: 'vLLM',
+  perplexity: 'Perplexity', cohere: 'Cohere', cursor: 'Cursor', other: 'Other',
+};
 
-  // 2. High-engagement HN stories as live dynamic supplements (100+ points)
-  const liveReleases = releases
-    .filter(r => r.source === 'hackernews' && (r.engagement?.score || 0) >= 100)
-    .sort(byDate);
+function companyKey(item) {
+  const text = `${item.author || ''} ${item.sourceName || ''} ${item.title || ''} ${(item.tags || []).join(' ')}`;
+  for (const [key, re] of COMPANY_PATTERNS) {
+    if (re.test(text)) return key;
+  }
+  return 'other';
+}
 
-  // Merge: curated first, fill remaining slots with live HN stories
-  const combined = [...curated];
-  const seenTitles = curated.map(c => normalize(c.title));
-  const NON_COMPANY_TAGS = new Set(['AI', 'inference', 'coding-tool', 'image-gen', 'search']);
+let _highlightFilter = 'all';
+let _lastHighlightPool = [];
 
-  for (const item of liveReleases) {
-    if (combined.length >= 10) break;
-    const norm = normalize(item.title);
-    if (seenTitles.some(t => t.includes(norm) || norm.includes(t))) continue;
-    // Use company tag as author for logo display
+export function setHighlightCompanyFilter(key) {
+  _highlightFilter = key || 'all';
+  renderHighlightsFromPool();
+}
+
+// Highlights: releases only. Diversity-aware so each major company gets a
+// guaranteed slot when they have anything recent; companies with the freshest
+// release lead. Blog posts / news articles are intentionally excluded — those
+// live in the News tab.
+export function renderHighlights(releases, _news = []) {
+  const NON_COMPANY_TAGS = new Set(['AI', 'inference', 'coding-tool', 'image-gen', 'search', 'reddit', 'ai', 'ml']);
+  const labelCompany = (item) => {
+    if (item.author && item.author !== item.sourceName) return item.author;
     const companyTag = (item.tags || []).find(t => !NON_COMPANY_TAGS.has(t));
-    if (companyTag) item.author = companyTag;
-    if (!item.extra) item.extra = {};
-    if ((item.tags || []).includes('inference')) item.extra.category = 'inference';
-    else if ((item.tags || []).includes('coding-tool')) item.extra.category = 'tool';
-    else item.extra.category = 'model';
-    combined.push(item);
-    seenTitles.push(norm);
+    return companyTag || item.sourceName || item.author || 'AI';
+  };
+  const inferCategory = (item) => {
+    const tags = (item.tags || []).map(t => (t || '').toLowerCase());
+    if (tags.includes('inference')) return 'inference';
+    if (tags.includes('coding-tool') || tags.includes('tool')) return 'tool';
+    return 'model';
+  };
+
+  const month = 30 * 24;
+  const pool = [];
+
+  // Curated releases — included regardless of age (scorer de-ranks stale).
+  releases.filter(r => r.source === 'major_releases').forEach(r => pool.push(r));
+
+  // Dynamic releases (HN releases, Anthropic releases) within 30d.
+  releases.filter(r => r.source !== 'major_releases').forEach(r => {
+    if (ageHours(r.publishedAt) <= month) pool.push(r);
+  });
+
+  // Annotate each item with company + category, dedup by title.
+  const normalize = s => (s || '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 30);
+  const seenTitles = new Set();
+  const annotated = [];
+  for (const raw of pool) {
+    const norm = normalize(raw.title);
+    if (!norm || seenTitles.has(norm)) continue;
+    seenTitles.add(norm);
+    const item = { ...raw };
+    item._company = companyKey(item);
+    item.author = labelCompany(item);
+    item.extra = { ...(item.extra || {}), category: item.extra?.category || inferCategory(item) };
+    annotated.push(item);
   }
 
-  renderHighlightCards('highlightsWeek', combined.slice(0, 10), 'No major releases found');
+  _lastHighlightPool = annotated;
+  renderCompanyFilters(annotated);
+  renderHighlightsFromPool();
+}
+
+// Round-robin pick: each company that has items contributes one item per
+// round, in order of their freshest item. Guarantees breadth before depth.
+function diverseSelect(items, k = 12) {
+  const groups = {};
+  for (const it of items) {
+    const key = it._company || 'other';
+    (groups[key] ||= []).push(it);
+  }
+  for (const k2 of Object.keys(groups)) {
+    groups[k2].sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+  }
+  // Order companies by freshness of their top item.
+  const order = Object.keys(groups).sort((a, b) =>
+    new Date(groups[b][0].publishedAt) - new Date(groups[a][0].publishedAt)
+  );
+  const selected = [];
+  let round = 0;
+  while (selected.length < k) {
+    let added = false;
+    for (const key of order) {
+      const item = groups[key][round];
+      if (item) {
+        selected.push(item);
+        added = true;
+        if (selected.length >= k) break;
+      }
+    }
+    if (!added) break;
+    round++;
+  }
+  return selected;
+}
+
+function renderHighlightsFromPool() {
+  const filtered = _highlightFilter === 'all'
+    ? _lastHighlightPool
+    : _lastHighlightPool.filter(i => i._company === _highlightFilter);
+
+  // When filtered to a single company, just sort by recency (no need for round-robin)
+  const items = _highlightFilter === 'all'
+    ? diverseSelect(filtered, 12)
+    : filtered.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt)).slice(0, 12);
+
+  renderHighlightCards('highlightsWeek', items, _highlightFilter === 'all'
+    ? 'Loading the latest AI updates…'
+    : `No recent updates from ${COMPANY_LABELS[_highlightFilter] || _highlightFilter}.`);
+}
+
+function renderCompanyFilters(pool) {
+  const el = document.getElementById('highlightsCompanyFilters');
+  if (!el) return;
+  // Count items per company present in pool, sorted by freshest-first
+  const groups = {};
+  for (const it of pool) {
+    const k = it._company || 'other';
+    if (!groups[k]) groups[k] = { count: 0, latest: 0 };
+    groups[k].count++;
+    const ts = new Date(it.publishedAt).getTime();
+    if (ts > groups[k].latest) groups[k].latest = ts;
+  }
+  const ordered = Object.entries(groups)
+    .filter(([k]) => k !== 'other')
+    .sort(([, a], [, b]) => b.latest - a.latest);
+
+  const chips = [`<button class="filter-chip${_highlightFilter === 'all' ? ' active' : ''}" data-company="all">All <span class="filter-chip__count">${pool.length}</span></button>`];
+  for (const [key, info] of ordered) {
+    const label = COMPANY_LABELS[key] || key;
+    const active = _highlightFilter === key ? ' active' : '';
+    chips.push(`<button class="filter-chip${active}" data-company="${key}">${label} <span class="filter-chip__count">${info.count}</span></button>`);
+  }
+  el.innerHTML = chips.join('');
 }
 
 const COMPANY_COLORS = {
@@ -241,6 +439,40 @@ function getCompanyLogo(author, color) {
   return `<span class="highlight-card__logo${smClass}" style="background:${color}">${escapeHTML(initials)}</span>`;
 }
 
+// Always-relative time for the highlights section. Mixing "19H AGO" with
+// "12/17/2025" wrecks the column alignment, so we never fall back to a date.
+function relativeTime(dateStr) {
+  const ms = Date.now() - new Date(dateStr).getTime();
+  if (!isFinite(ms) || ms < 0) return '';
+  const m = Math.floor(ms / 60000);
+  if (m < 1) return 'just now';
+  if (m < 60) return `${m}m ago`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return `${h}h ago`;
+  const d = Math.floor(h / 24);
+  if (d < 7) return `${d}d ago`;
+  const w = Math.floor(d / 7);
+  if (w < 5) return `${w}w ago`;
+  const mo = Math.floor(d / 30);
+  if (mo < 12) return `${mo}mo ago`;
+  const y = Math.floor(d / 365);
+  return `${y}y ago`;
+}
+
+function bucketFor(item) {
+  const h = ageHours(item.publishedAt);
+  if (h < 24) return 'today';
+  if (h < 24 * 7) return 'this-week';
+  if (h < 24 * 30) return 'this-month';
+  return 'earlier';
+}
+const HIGHLIGHT_BUCKETS = [
+  ['today',      'Today'],
+  ['this-week',  'This week'],
+  ['this-month', 'This month'],
+  ['earlier',    'Earlier'],
+];
+
 function renderHighlightCards(containerId, items, emptyMsg) {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -251,31 +483,61 @@ function renderHighlightCards(containerId, items, emptyMsg) {
     return;
   }
 
+  // Skip items with no usable title (defensive — caused empty-row bug previously).
+  const valid = items.filter(it => it && typeof it.title === 'string' && it.title.trim().length > 2);
+
+  // Group by time bucket so the section becomes scannable.
+  const groups = { today: [], 'this-week': [], 'this-month': [], earlier: [] };
+  valid.forEach(it => groups[bucketFor(it)].push(it));
+
   const fragment = document.createDocumentFragment();
-  items.forEach(item => {
-    const category = item.extra?.category || 'model';
-    const color = getCompanyColor(item.author);
-    const a = document.createElement('a');
-    a.className = `highlight-card highlight-card--${category}`;
-    a.style.borderLeftColor = color;
-    a.href = item.url;
-    a.target = '_blank';
-    a.rel = 'noopener';
-    a.innerHTML = `
-      <span class="highlight-card__header">
-        ${getCompanyLogo(item.author, color)}
-        <span class="highlight-card__company" style="color:${color}">${escapeHTML(item.author || '')}</span>
-      </span>
-      <span class="highlight-card__title">${escapeHTML(item.title)}</span>
-      <span class="highlight-card__category highlight-card__category--${category}">${category}</span>
-      <span class="highlight-card__meta">
-        <span class="material-icons-outlined">schedule</span>
-        ${timeAgo(item.publishedAt)}
-      </span>
-    `;
-    fragment.appendChild(a);
-  });
+  for (const [key, label] of HIGHLIGHT_BUCKETS) {
+    const list = groups[key];
+    if (!list.length) continue;
+    const section = document.createElement('section');
+    section.className = `highlight-bucket highlight-bucket--${key}`;
+    const header = document.createElement('div');
+    header.className = 'highlight-bucket__header';
+    header.innerHTML = `<span class="highlight-bucket__label">${label}</span><span class="highlight-bucket__count">${list.length}</span>`;
+    section.appendChild(header);
+    list.forEach(item => {
+      const fresh = freshnessTag(item);
+      const company = item._company || 'other';
+      const companyLabel = COMPANY_LABELS[company] || item.author || 'AI';
+      const a = document.createElement('a');
+      a.className = 'highlight-row';
+      a.dataset.company = company;
+      a.href = item.url;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.innerHTML = `
+        <span class="highlight-row__rail" aria-hidden="true"></span>
+        <span class="highlight-row__body">
+          <span class="highlight-row__top">
+            <span class="highlight-row__company">${escapeHTML(companyLabel)}</span>
+            ${fresh === 'new' ? '<span class="highlight-row__pill">NEW</span>' : ''}
+            <span class="highlight-row__time">${escapeHTML(relativeTime(item.publishedAt))}</span>
+          </span>
+          <span class="highlight-row__title">${escapeHTML(item.title)}</span>
+        </span>
+      `;
+      section.appendChild(a);
+    });
+    fragment.appendChild(section);
+  }
   container.appendChild(fragment);
+
+  updateHighlightsStats(valid);
+}
+
+function updateHighlightsStats(items) {
+  const el = document.getElementById('highlightsStats');
+  if (!el) return;
+  const fresh = items.filter(i => ageHours(i.publishedAt) < 24).length;
+  const week = items.filter(i => ageHours(i.publishedAt) < 168).length;
+  el.innerHTML = fresh > 0
+    ? `<span class="highlights__stat highlights__stat--live"><span class="highlights__pulse"></span>${fresh} new today</span><span class="highlights__stat-sep">·</span><span class="highlights__stat">${week} this week</span>`
+    : `<span class="highlights__stat">${week} this week</span>`;
 }
 
 export function buildSourceFilters(items, containerId) {

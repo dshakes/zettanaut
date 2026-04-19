@@ -3,7 +3,8 @@ import { CONFIG } from '../config.js';
 function recencyScore(publishedAt) {
   const ageMs = Date.now() - new Date(publishedAt).getTime();
   const ageHours = ageMs / (1000 * 60 * 60);
-  return Math.max(0, Math.min(100, 100 * Math.exp(-ageHours / 48)));
+  // Steeper decay so today's items dominate; halves every ~24h.
+  return Math.max(0, Math.min(100, 100 * Math.exp(-ageHours / 24)));
 }
 
 function engagementScore(item) {
@@ -20,16 +21,13 @@ function engagementScore(item) {
     case 'major_releases': return Math.min(100, s);
     case 'arxiv': return 30;
     default:
-      // RSS feeds (rss_*) have no engagement data
-      if (item.source?.startsWith('rss_')) return 40;
+      if (item.source?.startsWith('rss_')) return 45;
       return 20;
   }
 }
 
 function authorityScore(item) {
-  // Direct match first
   let authority = CONFIG.SOURCE_AUTHORITY[item.source];
-  // Try rss prefix match
   if (authority == null && item.source?.startsWith('rss_')) {
     authority = CONFIG.SOURCE_AUTHORITY.rss;
   }
@@ -40,7 +38,8 @@ export function scoreItem(item) {
   const r = recencyScore(item.publishedAt);
   const e = engagementScore(item);
   const a = authorityScore(item);
-  return Math.round(r * 0.35 + e * 0.35 + a * 0.30);
+  // Weight recency higher to surface fresh AI content.
+  return Math.round(r * 0.45 + e * 0.30 + a * 0.25);
 }
 
 export function scoreAndSort(items) {

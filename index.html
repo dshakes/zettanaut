@@ -8,10 +8,11 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/theme.css">
 </head>
 <body>
   <!-- App Bar -->
@@ -25,32 +26,25 @@
     </div>
     <div class="app-bar__actions">
       <span class="last-updated" id="lastUpdated"></span>
-      <button class="icon-btn" id="refreshBtn" title="Refresh all sources">
+      <span class="source-health-wrap" id="sourceHealth" title="Source status"></span>
+      <button class="icon-btn" id="themeToggle" title="Toggle theme (T)" aria-label="Toggle theme">
+        <span class="material-icons-outlined">dark_mode</span>
+      </button>
+      <button class="icon-btn" id="refreshBtn" title="Refresh all sources (R)" aria-label="Refresh">
         <span class="material-icons-outlined">refresh</span>
       </button>
     </div>
   </header>
 
-  <!-- Highlights Section -->
-  <section class="highlights" id="highlights">
-    <div class="highlights__inner">
-      <div class="highlights__section highlights__section--full">
-        <h2 class="highlights__heading">
-          <span class="material-icons-outlined">bolt</span>
-          Recent Major Releases
-        </h2>
-        <div class="highlights__cards" id="highlightsWeek">
-          <div class="highlights__empty">Loading highlights...</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Layout wrapper for sidebar + content -->
   <div class="app-layout">
     <!-- Sidebar Navigation (desktop) / Tab Bar (mobile) -->
     <nav class="nav-sidebar" id="tabBar">
-      <button class="nav-item active" data-tab="ai-engineer">
+      <button class="nav-item active" data-tab="latest">
+        <span class="material-icons-outlined">bolt</span>
+        <span class="nav-item__label">Latest</span>
+      </button>
+      <button class="nav-item" data-tab="ai-engineer">
         <span class="material-icons-outlined">route</span>
         <span class="nav-item__label">AI Engineer</span>
       </button>
@@ -81,6 +75,11 @@
         <span class="material-icons-outlined">podcasts</span>
         <span class="nav-item__label">Podcasts</span>
       </button>
+      <button class="nav-item" data-tab="saved">
+        <span class="material-icons-outlined">bookmark</span>
+        <span class="nav-item__label">Saved</span>
+        <span class="badge" id="savedCount"></span>
+      </button>
       <button class="nav-item" data-tab="archive">
         <span class="material-icons-outlined">inventory_2</span>
         <span class="nav-item__label">Archive</span>
@@ -90,12 +89,30 @@
 
     <!-- Content -->
     <main class="content" id="content">
+    <!-- Latest Panel (default landing) -->
+    <section class="panel active" id="panel-latest">
+      <div class="latest-page">
+        <header class="latest-page__header">
+          <h1 class="highlights__heading">Latest in AI</h1>
+          <p class="latest-page__lede">Releases from major AI labs and open-source projects, grouped by recency. Updated continuously.</p>
+        </header>
+        <div class="latest-page__meta">
+          <div class="highlights__stats" id="highlightsStats"></div>
+        </div>
+        <div class="highlights__company-filters" id="highlightsCompanyFilters"></div>
+        <div class="highlights__cards" id="highlightsWeek">
+          <div class="highlights__empty">Loading the latest AI updates…</div>
+        </div>
+      </div>
+    </section>
+
     <!-- News Panel -->
     <section class="panel" id="panel-news">
       <div class="panel-brief">
         <span class="material-icons-outlined">newspaper</span>
-        <p>Curated AI news from Hacker News, Reddit, Dev.to and more — ranked by relevance and engagement.</p>
+        <p>Curated AI news from Hacker News, Reddit, Dev.to, and 18+ official lab blogs — ranked for freshness.</p>
       </div>
+      <div class="freshness-bar" id="newsFreshnessBar"></div>
       <div class="panel-toolbar">
         <div class="search-bar">
           <span class="material-icons-outlined">search</span>
@@ -107,8 +124,16 @@
             <option value="newest" selected>Newest First</option>
             <option value="relevance">Relevance</option>
             <option value="popular">Most Popular</option>
+            <option value="grouped">Group by Time</option>
           </select>
         </div>
+      </div>
+      <div class="topic-filters" id="newsWindowFilters">
+        <span class="source-filters__label">When:</span>
+        <button class="filter-chip active" data-window="all">All</button>
+        <button class="filter-chip" data-window="24">Last 24h</button>
+        <button class="filter-chip" data-window="72">3 days</button>
+        <button class="filter-chip" data-window="168">Week</button>
       </div>
       <div class="topic-filters" id="newsTopicFilters">
         <span class="source-filters__label">Topics:</span>
@@ -127,6 +152,7 @@
         <span class="material-icons-outlined">rocket_launch</span>
         <p>Latest model launches, framework updates, and tool releases from major AI labs and open-source projects.</p>
       </div>
+      <div class="freshness-bar" id="releasesFreshnessBar"></div>
       <div class="panel-toolbar">
         <div class="search-bar">
           <span class="material-icons-outlined">search</span>
@@ -138,8 +164,16 @@
             <option value="newest" selected>Newest First</option>
             <option value="relevance">Relevance</option>
             <option value="popular">Most Popular</option>
+            <option value="grouped">Group by Time</option>
           </select>
         </div>
+      </div>
+      <div class="topic-filters" id="releasesWindowFilters">
+        <span class="source-filters__label">When:</span>
+        <button class="filter-chip active" data-window="all">All</button>
+        <button class="filter-chip" data-window="24">Last 24h</button>
+        <button class="filter-chip" data-window="168">Week</button>
+        <button class="filter-chip" data-window="720">Month</button>
       </div>
       <div class="topic-filters" id="releasesTopicFilters">
         <span class="source-filters__label">Topics:</span>
@@ -246,7 +280,7 @@
     </section>
 
     <!-- AI Engineer Panel -->
-    <section class="panel active" id="panel-ai-engineer">
+    <section class="panel" id="panel-ai-engineer">
       <div class="learning-path">
 
         <!-- Hero -->
@@ -795,6 +829,24 @@
         <p>AI-powered concept encyclopedia — search any AI term and get instant, comprehensive explanations with references.</p>
       </div>
       <div class="ai-atlas"></div>
+    </section>
+
+    <!-- Saved Panel -->
+    <section class="panel" id="panel-saved">
+      <div class="panel-brief">
+        <span class="material-icons-outlined">bookmark</span>
+        <p>Your saved items — bookmark anything from News, Releases, or Papers and it lands here.</p>
+      </div>
+      <div class="panel-toolbar">
+        <div class="search-bar">
+          <span class="material-icons-outlined">search</span>
+          <input type="text" class="search-input" id="savedSearch" placeholder="Search saved..." autocomplete="off">
+        </div>
+        <button class="text-btn text-btn--danger" id="clearSavedBtn">
+          <span class="material-icons-outlined">delete_sweep</span> Clear all
+        </button>
+      </div>
+      <div class="card-grid" id="savedGrid"></div>
     </section>
 
     <!-- Archive Panel -->

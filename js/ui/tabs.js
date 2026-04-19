@@ -18,7 +18,15 @@ export function initTabs() {
 
   // Restore from hash
   const hash = location.hash.slice(1);
-  if (['news', 'releases', 'papers', 'resources', 'podcasts', 'ai-engineer', 'ai-atlas', 'archive'].includes(hash)) {
+  if (['latest', 'news', 'releases', 'papers', 'resources', 'podcasts', 'ai-engineer', 'ai-atlas', 'archive', 'saved'].includes(hash)) {
     activate(hash);
   }
+}
+
+export function activateTab(name) {
+  const tabBar = document.getElementById('tabBar');
+  if (!tabBar) return;
+  tabBar.querySelectorAll('.nav-item').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === `panel-${name}`));
+  history.replaceState(null, '', `#${name}`);
 }
