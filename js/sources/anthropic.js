@@ -114,26 +114,38 @@ async function fetchYouTube() {
   });
 }
 
+// In-flight dedup: News and Releases aggregators both call this in parallel on
+// cold start. Without this, we'd do 16 XML fetches instead of 8.
+let _inflight = null;
+
 export async function fetchItems() {
   const cached = cache.get(CACHE_KEY);
   if (cached) return cached;
+  if (_inflight) return _inflight;
 
-  const promises = [
-    fetchSitemap().catch(() => []),
-    ...GITHUB_FEEDS.map(f => fetchGithubFeed(f).catch(() => [])),
-    fetchYouTube().catch(() => []),
-  ];
-  const results = await Promise.all(promises);
-  const items = results.flat();
+  _inflight = (async () => {
+    const promises = [
+      fetchSitemap().catch(() => []),
+      ...GITHUB_FEEDS.map(f => fetchGithubFeed(f).catch(() => [])),
+      fetchYouTube().catch(() => []),
+    ];
+    const results = await Promise.all(promises);
+    const items = results.flat();
 
-  // Dedup by id
-  const seen = new Set();
-  const deduped = items.filter(i => {
-    if (seen.has(i.id)) return false;
-    seen.add(i.id);
-    return true;
-  });
+    const seen = new Set();
+    const deduped = items.filter(i => {
+      if (seen.has(i.id)) return false;
+      seen.add(i.id);
+      return true;
+    });
 
-  cache.set(CACHE_KEY, deduped, CONFIG.CACHE_TTL.news);
-  return deduped;
+    cache.set(CACHE_KEY, deduped, CONFIG.CACHE_TTL.news);
+    return deduped;
+  })();
+
+  try {
+    return await _inflight;
+  } finally {
+    _inflight = null;
+  }
 }

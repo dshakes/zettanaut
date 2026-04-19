@@ -121,19 +121,30 @@ async function loadNews() {
   sourceHealthByKind.news = sourceHealth;
   applyFilters('news');
   buildSourceFilters(items, 'newsSourceFilters');
-  refreshHighlights();
   refreshSourceHealth();
   if (errors.length) showToast(`${errors.length} news source(s) unavailable`, 'error');
 }
 
+const RELEASES_AGGREGATE_CACHE_KEY = 'releases-aggregate-v1';
+const RELEASES_AGGREGATE_TTL = 30 * 60 * 1000; // 30 min
+
 async function loadReleases() {
-  const { items, errors, sourceHealth } = await fetchAllReleases();
+  const { items, errors, sourceHealth } = await fetchAllReleases({
+    onPartial: ({ items: partialItems, sourceHealth: partialHealth }) => {
+      // Paint the Latest tab the moment curated + HN resolve; don't wait for
+      // the slow Anthropic feed bundle.
+      currentReleases = partialItems;
+      sourceHealthByKind.releases = partialHealth;
+      refreshHighlights();
+    },
+  });
   currentReleases = items;
   sourceHealthByKind.releases = sourceHealth;
   applyFilters('releases');
   buildSourceFilters(items, 'releasesSourceFilters');
   refreshHighlights();
   refreshSourceHealth();
+  cache.set(RELEASES_AGGREGATE_CACHE_KEY, items, RELEASES_AGGREGATE_TTL);
   if (errors.length) showToast(`${errors.length} release source(s) unavailable`, 'error');
 }
 
@@ -560,6 +571,14 @@ async function init() {
   setupEventListeners();
   updateSavedCount();
   renderSavedView();
+
+  // Warm paint: if we have cached releases from a recent visit, render
+  // highlights immediately so the Latest tab isn't blank while fetches run.
+  const cachedReleases = cache.get(RELEASES_AGGREGATE_CACHE_KEY);
+  if (Array.isArray(cachedReleases) && cachedReleases.length) {
+    currentReleases = cachedReleases;
+    refreshHighlights();
+  }
 
   showLoader('newsGrid');
   showLoader('releasesGrid');

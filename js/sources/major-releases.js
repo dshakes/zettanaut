@@ -5,7 +5,10 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 
 export async function fetchItems() {
   try {
-    const data = await fetchJSON(`data/major-releases.json?v=${Date.now()}`);
+    // Hourly cache-buster: fresh enough for a manually-edited JSON, lets the
+    // browser HTTP-cache the file across page loads within the hour.
+    const hourBucket = Math.floor(Date.now() / 3600000);
+    const data = await fetchJSON(`data/major-releases.json?v=${hourBucket}`);
     const releases = data.releases || [];
     const cutoff = Date.now() - CONFIG.CURATED_RELEASE_MAX_AGE_DAYS * DAY_MS;
 

@@ -63,12 +63,38 @@ export async function fetchAllPapers() {
   return { items: scoreAndSort(deduped), errors: result.errors, sourceHealth: result.sourceHealth };
 }
 
-export async function fetchAllReleases() {
-  const result = await fetchAllSafe([
+// Progressive: `onPartial({ items, sourceHealth })` fires each time a source
+// resolves so the UI can render curated releases (local JSON, ~100ms) without
+// waiting for the slowest feed (Anthropic: 8 CORS-proxied XML fetches, 3–10s).
+export async function fetchAllReleases({ onPartial } = {}) {
+  const fetchers = [
     { fn: fetchMajorReleases, label: 'Curated' },
     { fn: fetchHNReleases, label: 'HN Releases' },
     { fn: async () => (await fetchAnthropic()).filter(i => i.type === 'release'), label: 'Anthropic Releases' },
-  ]);
-  const deduped = deduplicate(result.items);
-  return { items: scoreAndSort(deduped), errors: result.errors, sourceHealth: result.sourceHealth };
+  ];
+
+  const items = [];
+  const sourceHealth = [];
+
+  await Promise.all(fetchers.map(async ({ fn, label }) => {
+    try {
+      const got = await fn();
+      if (Array.isArray(got)) {
+        items.push(...got);
+        sourceHealth.push({ name: label, ok: true, count: got.length });
+      } else {
+        sourceHealth.push({ name: label, ok: false, count: 0, error: 'bad payload' });
+      }
+    } catch (e) {
+      sourceHealth.push({ name: label, ok: false, count: 0, error: e?.message || 'failed' });
+    }
+    if (onPartial) {
+      const partial = scoreAndSort(deduplicate([...items]));
+      onPartial({ items: partial, sourceHealth: [...sourceHealth] });
+    }
+  }));
+
+  const deduped = deduplicate(items);
+  const errors = sourceHealth.filter(s => !s.ok).map(s => `${s.name}: ${s.error}`);
+  return { items: scoreAndSort(deduped), errors, sourceHealth };
 }
